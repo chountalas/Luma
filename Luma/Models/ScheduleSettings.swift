@@ -61,6 +61,13 @@ struct ScheduleSettings: Codable, Equatable {
     var sleepTransitionSeconds: Double = 3600
     var pauseTransitionSeconds: Double = 1
 
+    var hasValidSunCoordinates: Bool {
+        latitude.isFinite
+            && longitude.isFinite
+            && (-90...90).contains(latitude)
+            && (-180...180).contains(longitude)
+    }
+
     func phase(at date: Date, calendar: Calendar = .current) -> ActivePhase {
         let components = calendar.dateComponents([.hour, .minute], from: date)
         let current = TimeOfDay(hour: components.hour ?? 0, minute: components.minute ?? 0)
@@ -70,7 +77,7 @@ struct ScheduleSettings: Codable, Equatable {
         }
 
         if mode == .sun,
-           let events = SunCalculator.events(on: date, latitude: latitude, longitude: longitude, calendar: calendar) {
+           let events = sunEvents(on: date, calendar: calendar) {
             return date >= events.sunset || date < events.sunrise ? .night : .day
         }
 
@@ -79,6 +86,14 @@ struct ScheduleSettings: Codable, Equatable {
         }
 
         return .day
+    }
+
+    func sunEvents(on date: Date, calendar: Calendar = .current) -> SunCalculator.SunEvents? {
+        guard hasValidSunCoordinates else {
+            return nil
+        }
+
+        return SunCalculator.events(on: date, latitude: latitude, longitude: longitude, calendar: calendar)
     }
 
     private func contains(_ time: TimeOfDay, start: TimeOfDay, end: TimeOfDay) -> Bool {

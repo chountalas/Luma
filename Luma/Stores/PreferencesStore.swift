@@ -38,10 +38,12 @@ final class PreferencesStore: ObservableObject {
             return
         }
 
-        settings.selectedPreset = preset
-        settings.day = profiles.day
-        settings.night = profiles.night
-        settings.sleep = profiles.sleep
+        var updated = settings
+        updated.selectedPreset = preset
+        updated.day = profiles.day
+        updated.night = profiles.night
+        updated.sleep = profiles.sleep
+        settings = updated
     }
 
     func markCustomPreset() {
@@ -51,31 +53,37 @@ final class PreferencesStore: ObservableObject {
     }
 
     func nudgeCurrentKelvin(by delta: Double) {
+        var updated = settings
         let phase = settings.schedule.phase(at: Date())
         switch phase {
         case .day:
-            settings.day.kelvin = clamped(settings.day.kelvin + delta, 1000, 10000)
+            updated.day.kelvin = clamped(updated.day.kelvin + delta, 1000, 10000)
         case .night:
-            settings.night.kelvin = clamped(settings.night.kelvin + delta, 1000, 10000)
+            updated.night.kelvin = clamped(updated.night.kelvin + delta, 1000, 10000)
         case .sleep:
-            settings.sleep.kelvin = clamped(settings.sleep.kelvin + delta, 1000, 10000)
+            updated.sleep.kelvin = clamped(updated.sleep.kelvin + delta, 1000, 10000)
         case .paused:
-            break
+            return
         }
+        updated.selectedPreset = .custom
+        settings = updated
     }
 
     func nudgeCurrentBrightness(by delta: Double) {
+        var updated = settings
         let phase = settings.schedule.phase(at: Date())
         switch phase {
         case .day:
-            settings.day.brightness = clamped(settings.day.brightness + delta, 5, 150)
+            updated.day.brightness = clamped(updated.day.brightness + delta, 5, 150)
         case .night:
-            settings.night.brightness = clamped(settings.night.brightness + delta, 5, 150)
+            updated.night.brightness = clamped(updated.night.brightness + delta, 5, 150)
         case .sleep:
-            settings.sleep.brightness = clamped(settings.sleep.brightness + delta, 5, 150)
+            updated.sleep.brightness = clamped(updated.sleep.brightness + delta, 5, 150)
         case .paused:
-            break
+            return
         }
+        updated.selectedPreset = .custom
+        settings = updated
     }
 
     func importSafeIrisPreferences() -> Bool {

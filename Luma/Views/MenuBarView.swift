@@ -92,11 +92,12 @@ struct MenuBarView: View {
                 set: { preferences.applyPreset($0) }
             )) {
                 ForEach(LumaPreset.allCases) { preset in
-                    Text(preset.title).tag(preset)
+                    Text(preset.title)
+                        .tag(preset)
                 }
             }
             .labelsHidden()
-            .pickerStyle(.segmented)
+            .pickerStyle(.menu)
         }
     }
 

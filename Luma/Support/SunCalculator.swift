@@ -7,6 +7,13 @@ enum SunCalculator {
     }
 
     static func events(on date: Date, latitude: Double, longitude: Double, calendar: Calendar = .current) -> SunEvents? {
+        guard latitude.isFinite,
+              longitude.isFinite,
+              (-90...90).contains(latitude),
+              (-180...180).contains(longitude) else {
+            return nil
+        }
+
         let dayStart = calendar.startOfDay(for: date)
         let dayOfYear = calendar.ordinality(of: .day, in: .year, for: dayStart) ?? 1
         let longitudeHour = longitude / 15
@@ -26,7 +33,8 @@ enum SunCalculator {
             return nil
         }
 
-        let offsetHours = Double(calendar.timeZone.secondsFromGMT(for: dayStart)) / 3600
+        let daylightOffsetProbe = dayStart.addingTimeInterval(12 * 3600)
+        let offsetHours = Double(calendar.timeZone.secondsFromGMT(for: daylightOffsetProbe)) / 3600
         return SunEvents(
             sunrise: dayStart.addingTimeInterval(normalizedHours(sunriseHours + offsetHours) * 3600),
             sunset: dayStart.addingTimeInterval(normalizedHours(sunsetHours + offsetHours) * 3600)

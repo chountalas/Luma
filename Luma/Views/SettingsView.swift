@@ -46,13 +46,13 @@ struct SettingsView: View {
                 .pickerStyle(.segmented)
 
                 if preferences.settings.schedule.mode == .sun {
-                    LabeledContent("Night window", value: "Sunset to sunrise")
+                    LabeledContent("Night window", value: sunScheduleSummary)
                     coordinateField("Latitude", value: $preferences.settings.schedule.latitude)
                     coordinateField("Longitude", value: $preferences.settings.schedule.longitude)
                 }
             }
 
-            Section("Night") {
+            Section(preferences.settings.schedule.mode == .sun ? "Manual fallback" : "Night") {
                 timePicker("Starts", time: $preferences.settings.schedule.nightStart)
                 timePicker("Ends", time: $preferences.settings.schedule.nightEnd)
             }
@@ -125,7 +125,7 @@ struct SettingsView: View {
                     Text(preset.title).tag(preset)
                 }
             }
-            .pickerStyle(.segmented)
+            .pickerStyle(.menu)
 
             Text(preferences.settings.selectedPreset.detail)
                 .foregroundStyle(.secondary)
@@ -193,6 +193,22 @@ struct SettingsView: View {
                 .multilineTextAlignment(.trailing)
                 .frame(width: 120)
         }
+    }
+
+    private var sunScheduleSummary: String {
+        let schedule = preferences.settings.schedule
+        guard schedule.hasValidSunCoordinates else {
+            return "Invalid coordinates; using manual fallback"
+        }
+
+        guard let events = schedule.sunEvents(on: Date()) else {
+            return "No sun event today; using manual fallback"
+        }
+
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .none
+        return "\(formatter.string(from: events.sunset)) to \(formatter.string(from: events.sunrise))"
     }
 }
 
