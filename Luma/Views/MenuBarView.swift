@@ -14,6 +14,8 @@ struct MenuBarView: View {
             Toggle("Paused", isOn: pauseBinding)
                 .toggleStyle(.switch)
 
+            presetControls
+
             phaseControls(title: "Day", profile: $preferences.settings.day)
             phaseControls(title: "Night", profile: $preferences.settings.night)
             phaseControls(title: "Sleep", profile: $preferences.settings.sleep)
@@ -80,6 +82,24 @@ struct MenuBarView: View {
         )
     }
 
+    private var presetControls: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Preset")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            Picker("Preset", selection: Binding(
+                get: { preferences.settings.selectedPreset },
+                set: { preferences.applyPreset($0) }
+            )) {
+                ForEach(LumaPreset.allCases) { preset in
+                    Text(preset.title).tag(preset)
+                }
+            }
+            .labelsHidden()
+            .pickerStyle(.segmented)
+        }
+    }
+
     private func phaseControls(title: String, profile: Binding<DisplayProfile>) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
@@ -88,7 +108,7 @@ struct MenuBarView: View {
             HStack {
                 Text("Warmth")
                     .frame(width: 72, alignment: .leading)
-                Slider(value: profile.kelvin, in: 1000...10000, step: 100)
+                Slider(value: profileValue(profile, \.kelvin), in: 1000...10000, step: 100)
                 Text("\(Int(profile.wrappedValue.kelvin))K")
                     .monospacedDigit()
                     .frame(width: 56, alignment: .trailing)
@@ -96,7 +116,7 @@ struct MenuBarView: View {
             HStack {
                 Text("Brightness")
                     .frame(width: 72, alignment: .leading)
-                Slider(value: profile.brightness, in: 5...150, step: 1)
+                Slider(value: profileValue(profile, \.brightness), in: 5...150, step: 1)
                 Text("\(Int(profile.wrappedValue.brightness))%")
                     .monospacedDigit()
                     .frame(width: 56, alignment: .trailing)
@@ -104,11 +124,21 @@ struct MenuBarView: View {
             HStack {
                 Text("Dim")
                     .frame(width: 72, alignment: .leading)
-                Slider(value: profile.dimOpacity, in: 0...85, step: 1)
+                Slider(value: profileValue(profile, \.dimOpacity), in: 0...85, step: 1)
                 Text("\(Int(profile.wrappedValue.dimOpacity))%")
                     .monospacedDigit()
                     .frame(width: 56, alignment: .trailing)
             }
         }
+    }
+
+    private func profileValue(_ profile: Binding<DisplayProfile>, _ keyPath: WritableKeyPath<DisplayProfile, Double>) -> Binding<Double> {
+        Binding(
+            get: { profile.wrappedValue[keyPath: keyPath] },
+            set: {
+                profile.wrappedValue[keyPath: keyPath] = $0
+                preferences.markCustomPreset()
+            }
+        )
     }
 }

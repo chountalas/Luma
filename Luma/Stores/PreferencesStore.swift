@@ -32,6 +32,24 @@ final class PreferencesStore: ObservableObject {
         settings = LumaSettings()
     }
 
+    func applyPreset(_ preset: LumaPreset) {
+        guard let profiles = preset.profiles else {
+            settings.selectedPreset = .custom
+            return
+        }
+
+        settings.selectedPreset = preset
+        settings.day = profiles.day
+        settings.night = profiles.night
+        settings.sleep = profiles.sleep
+    }
+
+    func markCustomPreset() {
+        if settings.selectedPreset != .custom {
+            settings.selectedPreset = .custom
+        }
+    }
+
     func nudgeCurrentKelvin(by delta: Double) {
         let phase = settings.schedule.phase(at: Date())
         switch phase {
@@ -100,6 +118,7 @@ final class PreferencesStore: ObservableObject {
         imported.schedule.pauseTransitionSeconds = (double(from: plist["PauseTransitionDuration"]) ?? 1000) / 1000
 
         settings = imported
+        settings.selectedPreset = .custom
         return true
     }
 

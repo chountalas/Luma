@@ -27,6 +27,7 @@ struct SettingsView: View {
 
     private var profilesTab: some View {
         Form {
+            presetsSection
             profileSection("Day", profile: $preferences.settings.day)
             profileSection("Night", profile: $preferences.settings.night)
             profileSection("Sleep", profile: $preferences.settings.sleep)
@@ -114,12 +115,39 @@ struct SettingsView: View {
         .formStyle(.grouped)
     }
 
+    private var presetsSection: some View {
+        Section("Presets") {
+            Picker("Strength", selection: Binding(
+                get: { preferences.settings.selectedPreset },
+                set: { preferences.applyPreset($0) }
+            )) {
+                ForEach(LumaPreset.allCases) { preset in
+                    Text(preset.title).tag(preset)
+                }
+            }
+            .pickerStyle(.segmented)
+
+            Text(preferences.settings.selectedPreset.detail)
+                .foregroundStyle(.secondary)
+        }
+    }
+
     private func profileSection(_ title: String, profile: Binding<DisplayProfile>) -> some View {
         Section(title) {
-            SliderRow(title: "Temperature", value: profile.kelvin, range: 1000...10000, step: 100, suffix: "K")
-            SliderRow(title: "Brightness", value: profile.brightness, range: 5...150, step: 1, suffix: "%")
-            SliderRow(title: "Dim opacity", value: profile.dimOpacity, range: 0...85, step: 1, suffix: "%")
+            SliderRow(title: "Temperature", value: profileValue(profile, \.kelvin), range: 1000...10000, step: 100, suffix: "K")
+            SliderRow(title: "Brightness", value: profileValue(profile, \.brightness), range: 5...150, step: 1, suffix: "%")
+            SliderRow(title: "Dim opacity", value: profileValue(profile, \.dimOpacity), range: 0...85, step: 1, suffix: "%")
         }
+    }
+
+    private func profileValue(_ profile: Binding<DisplayProfile>, _ keyPath: WritableKeyPath<DisplayProfile, Double>) -> Binding<Double> {
+        Binding(
+            get: { profile.wrappedValue[keyPath: keyPath] },
+            set: {
+                profile.wrappedValue[keyPath: keyPath] = $0
+                preferences.markCustomPreset()
+            }
+        )
     }
 
     private func timePicker(_ title: String, time: Binding<TimeOfDay>) -> some View {
