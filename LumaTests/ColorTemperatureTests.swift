@@ -1,5 +1,5 @@
 import XCTest
-@testable import LumaGuard
+@testable import Luma
 
 final class ColorTemperatureTests: XCTestCase {
     func testWarmTemperatureReducesBlueChannel() {
@@ -18,4 +18,3 @@ final class ColorTemperatureTests: XCTestCase {
         XCTAssertEqual(tables.blue.count, 32)
     }
 }
-

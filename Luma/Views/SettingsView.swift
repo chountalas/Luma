@@ -102,7 +102,7 @@ struct SettingsView: View {
             }
 
             Section("Reset") {
-                Button("Restore LumaGuard Defaults") {
+                Button("Restore Luma Defaults") {
                     preferences.resetToDefaults()
                 }
                 Button("Reset Display Now") {

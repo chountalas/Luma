@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct LumaGuardApp: App {
+struct LumaApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var preferences = PreferencesStore()
     @StateObject private var displayController = DisplayController()
@@ -10,7 +10,7 @@ struct LumaGuardApp: App {
 
     init() {
         NotificationCenter.default.addObserver(
-            forName: .lumaGuardWillTerminate,
+            forName: .lumaWillTerminate,
             object: nil,
             queue: .main
         ) { _ in
@@ -32,7 +32,7 @@ struct LumaGuardApp: App {
         }
         .menuBarExtraStyle(.window)
 
-        Window("LumaGuard", id: "settings") {
+        Window("Luma", id: "settings") {
             SettingsView()
                 .environmentObject(preferences)
                 .environmentObject(displayController)

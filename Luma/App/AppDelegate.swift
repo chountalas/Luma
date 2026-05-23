@@ -6,11 +6,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        NotificationCenter.default.post(name: .lumaGuardWillTerminate, object: nil)
+        NotificationCenter.default.post(name: .lumaWillTerminate, object: nil)
     }
 }
 
 extension Notification.Name {
-    static let lumaGuardWillTerminate = Notification.Name("LumaGuardWillTerminate")
+    static let lumaWillTerminate = Notification.Name("LumaWillTerminate")
 }
-

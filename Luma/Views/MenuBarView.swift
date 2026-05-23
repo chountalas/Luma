@@ -56,7 +56,7 @@ struct MenuBarView: View {
             .frame(width: 38, height: 38)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("LumaGuard")
+                Text("Luma")
                     .font(.headline)
                 Text(statusText)
                     .foregroundStyle(.secondary)

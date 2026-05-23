@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "528613C68EB469D447B82BD0"
-               BuildableName = "LumaGuard.app"
-               BlueprintName = "LumaGuard"
-               ReferencedContainer = "container:LumaGuard.xcodeproj">
+               BlueprintIdentifier = "0565F6C7DA26F0482928704E"
+               BuildableName = "Luma.app"
+               BlueprintName = "Luma"
+               ReferencedContainer = "container:Luma.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "528613C68EB469D447B82BD0"
-            BuildableName = "LumaGuard.app"
-            BlueprintName = "LumaGuard"
-            ReferencedContainer = "container:LumaGuard.xcodeproj">
+            BlueprintIdentifier = "0565F6C7DA26F0482928704E"
+            BuildableName = "Luma.app"
+            BlueprintName = "Luma"
+            ReferencedContainer = "container:Luma.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -44,10 +44,10 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2B33DBF904077AB27AE77F09"
-               BuildableName = "LumaGuardTests.xctest"
-               BlueprintName = "LumaGuardTests"
-               ReferencedContainer = "container:LumaGuard.xcodeproj">
+               BlueprintIdentifier = "D4CD85C144854C8DA57B3903"
+               BuildableName = "LumaTests.xctest"
+               BlueprintName = "LumaTests"
+               ReferencedContainer = "container:Luma.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,10 +68,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "528613C68EB469D447B82BD0"
-            BuildableName = "LumaGuard.app"
-            BlueprintName = "LumaGuard"
-            ReferencedContainer = "container:LumaGuard.xcodeproj">
+            BlueprintIdentifier = "0565F6C7DA26F0482928704E"
+            BuildableName = "Luma.app"
+            BlueprintName = "Luma"
+            ReferencedContainer = "container:Luma.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -87,10 +87,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "528613C68EB469D447B82BD0"
-            BuildableName = "LumaGuard.app"
-            BlueprintName = "LumaGuard"
-            ReferencedContainer = "container:LumaGuard.xcodeproj">
+            BlueprintIdentifier = "0565F6C7DA26F0482928704E"
+            BuildableName = "Luma.app"
+            BlueprintName = "Luma"
+            ReferencedContainer = "container:Luma.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>

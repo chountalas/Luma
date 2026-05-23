@@ -2,11 +2,11 @@
 set -euo pipefail
 
 MODE="${1:-run}"
-APP_NAME="LumaGuard"
-BUNDLE_ID="com.connorhountalas.LumaGuard"
+APP_NAME="Luma"
+BUNDLE_ID="com.connorhountalas.Luma"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DERIVED_DATA="$ROOT_DIR/DerivedData"
-PROJECT="$ROOT_DIR/LumaGuard.xcodeproj"
+PROJECT="$ROOT_DIR/Luma.xcodeproj"
 CONFIGURATION="Debug"
 BUILT_APP="$DERIVED_DATA/Build/Products/$CONFIGURATION/$APP_NAME.app"
 

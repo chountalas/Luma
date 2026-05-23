@@ -1,5 +1,5 @@
 import XCTest
-@testable import LumaGuard
+@testable import Luma
 
 final class ScheduleSettingsTests: XCTestCase {
     private var testCalendar: Calendar {

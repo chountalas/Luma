@@ -1,0 +1,521 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2E17368994AA57167BE71D28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE47B2CD78600E8891E874C3 /* Assets.xcassets */; };
+		32CC73949C5A199CC5C85839 /* LumaSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9658C81B528C2351FEAD47 /* LumaSettings.swift */; };
+		441FA182165BA8708366BEBB /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A9263AB25024CC3C4BD89C /* HotKeyManager.swift */; };
+		44D1E37F13363C4680990458 /* RuntimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F839E16478C7F0B43BB928 /* RuntimeState.swift */; };
+		49972B8E0ADD764EBC14D58A /* HotkeySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655E52D3D3C1E77B1CF5A0B9 /* HotkeySettings.swift */; };
+		49D311F7E64B25957BD2D2C5 /* SunCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBB6430826D90F900EC87C /* SunCalculator.swift */; };
+		4AFAE1D42AE8039D221308B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31CA152F60B444CE0629449 /* AppDelegate.swift */; };
+		4F68376CDEAFA622629BCC6B /* DisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4518A779047271DDA1B72DEA /* DisplayController.swift */; };
+		64370C9ADC68CD983BCB7471 /* ScheduleSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B928C23520C66A814B3D7C24 /* ScheduleSettingsTests.swift */; };
+		6A76344161370AA19D33C2B7 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66FA1CACC3A8BA41DE59B6 /* MenuBarView.swift */; };
+		6A8BF184AF082D3C64FD3B5C /* ScheduleSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D19274AD9924C344393AF /* ScheduleSettings.swift */; };
+		7DCFF9B0704DF6AC2E7AA536 /* PreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B2FB3309FF70F7711E562 /* PreferencesStore.swift */; };
+		82331AC0095C1974F3EF3A9C /* ColorTemperatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987E7E74436B304FF2D46E0 /* ColorTemperatureTests.swift */; };
+		A07C0333E99F836B609A474E /* OverlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A0E919CE3090201E82317 /* OverlayController.swift */; };
+		AA275BE380B7558509E462D6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C5A65312921C562F9563CE /* SettingsView.swift */; };
+		D5469B2F64F4B17C5ED965C6 /* SunCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A5B814FC5D99A966652685 /* SunCalculatorTests.swift */; };
+		D74E81A6B5D8158C0723D221 /* DisplayProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F48E667718E73B1D8602F /* DisplayProfile.swift */; };
+		D8B5CBA2CCB467CBB66DC3C2 /* ColorTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D40142EEEC9755BCEF7E13 /* ColorTemperature.swift */; };
+		FFD76A09DEFE3E5CB5BDE8CD /* LumaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8622749F5D1B6614FE2B1EC3 /* LumaApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		277A193FE4C68A777257EF0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AACE5AD3943208FFB6B19277 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0565F6C7DA26F0482928704E;
+			remoteInfo = Luma;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1601A8F6E440811A19621BC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		205F48E667718E73B1D8602F /* DisplayProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayProfile.swift; sourceTree = "<group>"; };
+		2987E7E74436B304FF2D46E0 /* ColorTemperatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTemperatureTests.swift; sourceTree = "<group>"; };
+		4518A779047271DDA1B72DEA /* DisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayController.swift; sourceTree = "<group>"; };
+		512A0E919CE3090201E82317 /* OverlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayController.swift; sourceTree = "<group>"; };
+		6317FAA29F22A3EA8450208F /* LumaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LumaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		655E52D3D3C1E77B1CF5A0B9 /* HotkeySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySettings.swift; sourceTree = "<group>"; };
+		69FBB6430826D90F900EC87C /* SunCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunCalculator.swift; sourceTree = "<group>"; };
+		6C9658C81B528C2351FEAD47 /* LumaSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumaSettings.swift; sourceTree = "<group>"; };
+		705D19274AD9924C344393AF /* ScheduleSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSettings.swift; sourceTree = "<group>"; };
+		8173B8A494DF3FFAAC687170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8622749F5D1B6614FE2B1EC3 /* LumaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumaApp.swift; sourceTree = "<group>"; };
+		93A5B814FC5D99A966652685 /* SunCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunCalculatorTests.swift; sourceTree = "<group>"; };
+		B928C23520C66A814B3D7C24 /* ScheduleSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSettingsTests.swift; sourceTree = "<group>"; };
+		C0C5A65312921C562F9563CE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		CE47B2CD78600E8891E874C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D5A9263AB25024CC3C4BD89C /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyManager.swift; sourceTree = "<group>"; };
+		DE66FA1CACC3A8BA41DE59B6 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		DF8C531E464C9C4EDE2648C6 /* Luma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Luma.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1F839E16478C7F0B43BB928 /* RuntimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeState.swift; sourceTree = "<group>"; };
+		F2D40142EEEC9755BCEF7E13 /* ColorTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTemperature.swift; sourceTree = "<group>"; };
+		F31CA152F60B444CE0629449 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F66B2FB3309FF70F7711E562 /* PreferencesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesStore.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		2D46185462B5B8617B6053BC /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				F66B2FB3309FF70F7711E562 /* PreferencesStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		4295DFC07B25B9364749B4DC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DE66FA1CACC3A8BA41DE59B6 /* MenuBarView.swift */,
+				C0C5A65312921C562F9563CE /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		56B965F3366E62652474AD8C /* Luma */ = {
+			isa = PBXGroup;
+			children = (
+				CE47B2CD78600E8891E874C3 /* Assets.xcassets */,
+				1601A8F6E440811A19621BC0 /* Info.plist */,
+				F7B8EB9E5BC798304FA24A89 /* App */,
+				71B4472CB3AD2E35BFAE9D9C /* Models */,
+				CEC16FCFB9E9FD15ADB23AFD /* Services */,
+				2D46185462B5B8617B6053BC /* Stores */,
+				E9A7A282B1B94F45577C9334 /* Support */,
+				4295DFC07B25B9364749B4DC /* Views */,
+			);
+			path = Luma;
+			sourceTree = "<group>";
+		};
+		71B4472CB3AD2E35BFAE9D9C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				205F48E667718E73B1D8602F /* DisplayProfile.swift */,
+				655E52D3D3C1E77B1CF5A0B9 /* HotkeySettings.swift */,
+				6C9658C81B528C2351FEAD47 /* LumaSettings.swift */,
+				E1F839E16478C7F0B43BB928 /* RuntimeState.swift */,
+				705D19274AD9924C344393AF /* ScheduleSettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		751CBF99010567D043B5DA42 = {
+			isa = PBXGroup;
+			children = (
+				56B965F3366E62652474AD8C /* Luma */,
+				E003F8E3CE0B21F5493C379F /* LumaTests */,
+				90CFB4B53B5F9EF91D718FC2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		90CFB4B53B5F9EF91D718FC2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DF8C531E464C9C4EDE2648C6 /* Luma.app */,
+				6317FAA29F22A3EA8450208F /* LumaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEC16FCFB9E9FD15ADB23AFD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4518A779047271DDA1B72DEA /* DisplayController.swift */,
+				D5A9263AB25024CC3C4BD89C /* HotKeyManager.swift */,
+				512A0E919CE3090201E82317 /* OverlayController.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E003F8E3CE0B21F5493C379F /* LumaTests */ = {
+			isa = PBXGroup;
+			children = (
+				2987E7E74436B304FF2D46E0 /* ColorTemperatureTests.swift */,
+				8173B8A494DF3FFAAC687170 /* Info.plist */,
+				B928C23520C66A814B3D7C24 /* ScheduleSettingsTests.swift */,
+				93A5B814FC5D99A966652685 /* SunCalculatorTests.swift */,
+			);
+			path = LumaTests;
+			sourceTree = "<group>";
+		};
+		E9A7A282B1B94F45577C9334 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				F2D40142EEEC9755BCEF7E13 /* ColorTemperature.swift */,
+				69FBB6430826D90F900EC87C /* SunCalculator.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		F7B8EB9E5BC798304FA24A89 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F31CA152F60B444CE0629449 /* AppDelegate.swift */,
+				8622749F5D1B6614FE2B1EC3 /* LumaApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0565F6C7DA26F0482928704E /* Luma */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 39082DED094B543B7F177A5B /* Build configuration list for PBXNativeTarget "Luma" */;
+			buildPhases = (
+				71162CE529E90DAEDA4BB5A5 /* Sources */,
+				988CDDC80A2A68B4C03DF20F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Luma;
+			packageProductDependencies = (
+			);
+			productName = Luma;
+			productReference = DF8C531E464C9C4EDE2648C6 /* Luma.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D4CD85C144854C8DA57B3903 /* LumaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04DA00EB8A99448AEEE86A94 /* Build configuration list for PBXNativeTarget "LumaTests" */;
+			buildPhases = (
+				CEE668F703A2CB9893788D3A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				451A9C42B8C63659ECBC26D9 /* PBXTargetDependency */,
+			);
+			name = LumaTests;
+			packageProductDependencies = (
+			);
+			productName = LumaTests;
+			productReference = 6317FAA29F22A3EA8450208F /* LumaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AACE5AD3943208FFB6B19277 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					0565F6C7DA26F0482928704E = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = DEFB5A06B29D6BCD602A2291 /* Build configuration list for PBXProject "Luma" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 751CBF99010567D043B5DA42;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 90CFB4B53B5F9EF91D718FC2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0565F6C7DA26F0482928704E /* Luma */,
+				D4CD85C144854C8DA57B3903 /* LumaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		988CDDC80A2A68B4C03DF20F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E17368994AA57167BE71D28 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		71162CE529E90DAEDA4BB5A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AFAE1D42AE8039D221308B1 /* AppDelegate.swift in Sources */,
+				D8B5CBA2CCB467CBB66DC3C2 /* ColorTemperature.swift in Sources */,
+				4F68376CDEAFA622629BCC6B /* DisplayController.swift in Sources */,
+				D74E81A6B5D8158C0723D221 /* DisplayProfile.swift in Sources */,
+				441FA182165BA8708366BEBB /* HotKeyManager.swift in Sources */,
+				49972B8E0ADD764EBC14D58A /* HotkeySettings.swift in Sources */,
+				FFD76A09DEFE3E5CB5BDE8CD /* LumaApp.swift in Sources */,
+				32CC73949C5A199CC5C85839 /* LumaSettings.swift in Sources */,
+				6A76344161370AA19D33C2B7 /* MenuBarView.swift in Sources */,
+				A07C0333E99F836B609A474E /* OverlayController.swift in Sources */,
+				7DCFF9B0704DF6AC2E7AA536 /* PreferencesStore.swift in Sources */,
+				44D1E37F13363C4680990458 /* RuntimeState.swift in Sources */,
+				6A8BF184AF082D3C64FD3B5C /* ScheduleSettings.swift in Sources */,
+				AA275BE380B7558509E462D6 /* SettingsView.swift in Sources */,
+				49D311F7E64B25957BD2D2C5 /* SunCalculator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEE668F703A2CB9893788D3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82331AC0095C1974F3EF3A9C /* ColorTemperatureTests.swift in Sources */,
+				64370C9ADC68CD983BCB7471 /* ScheduleSettingsTests.swift in Sources */,
+				D5469B2F64F4B17C5ED965C6 /* SunCalculatorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		451A9C42B8C63659ECBC26D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0565F6C7DA26F0482928704E /* Luma */;
+			targetProxy = 277A193FE4C68A777257EF0D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1882B0980A47A72FB926BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Luma/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.connorhountalas.Luma;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3B86AE427B76A8BE72A17C8E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LumaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.connorhountalas.LumaTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Luma.app/Contents/MacOS/Luma";
+			};
+			name = Release;
+		};
+		6A07A459DB18752AD74A145A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LumaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.connorhountalas.LumaTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Luma.app/Contents/MacOS/Luma";
+			};
+			name = Debug;
+		};
+		6CB952023A286F13211CB884 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		C0A4C21F59ADC6DDCD811DF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		FEECD67107BB7AE74F3574C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Luma/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.connorhountalas.Luma;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04DA00EB8A99448AEEE86A94 /* Build configuration list for PBXNativeTarget "LumaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A07A459DB18752AD74A145A /* Debug */,
+				3B86AE427B76A8BE72A17C8E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		39082DED094B543B7F177A5B /* Build configuration list for PBXNativeTarget "Luma" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEECD67107BB7AE74F3574C8 /* Debug */,
+				1882B0980A47A72FB926BD6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DEFB5A06B29D6BCD602A2291 /* Build configuration list for PBXProject "Luma" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6CB952023A286F13211CB884 /* Debug */,
+				C0A4C21F59ADC6DDCD811DF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AACE5AD3943208FFB6B19277 /* Project object */;
+}

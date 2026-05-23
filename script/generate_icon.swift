@@ -1,6 +1,6 @@
 import AppKit
 
-let output = URL(fileURLWithPath: CommandLine.arguments.dropFirst().first ?? "LumaGuard/Assets.xcassets/AppIcon.appiconset")
+let output = URL(fileURLWithPath: CommandLine.arguments.dropFirst().first ?? "Luma/Assets.xcassets/AppIcon.appiconset")
 let sizes: [(String, CGFloat)] = [
     ("icon_16x16.png", 16),
     ("icon_16x16@2x.png", 32),
