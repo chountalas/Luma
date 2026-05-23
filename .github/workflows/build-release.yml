@@ -1,0 +1,26 @@
+name: Build Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Package LumaGuard
+        run: ./script/package_release.sh
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: LumaGuard-arm64
+          path: |
+            dist/*.zip
+            dist/*.dmg
+            dist/checksums.txt
+

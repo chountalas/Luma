@@ -1,0 +1,41 @@
+name: LumaGuard
+options:
+  minimumXcodeGenVersion: 2.40.0
+  deploymentTarget:
+    macOS: "14.0"
+
+settings:
+  base:
+    SWIFT_VERSION: 6.0
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+
+targets:
+  LumaGuard:
+    type: application
+    platform: macOS
+    sources:
+      - path: LumaGuard
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.connorhountalas.LumaGuard
+        INFOPLIST_FILE: LumaGuard/Info.plist
+        MARKETING_VERSION: 0.1.0
+        CURRENT_PROJECT_VERSION: 1
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_HARDENED_RUNTIME: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    scheme:
+      testTargets:
+        - LumaGuardTests
+
+  LumaGuardTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: LumaGuardTests
+    dependencies:
+      - target: LumaGuard
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.connorhountalas.LumaGuardTests
+        INFOPLIST_FILE: LumaGuardTests/Info.plist
