@@ -3,16 +3,19 @@ import XCTest
 
 final class LumaPresetTests: XCTestCase {
     func testPresetProfilesChangeStrength() {
+        let clear = LumaPreset.clear.profiles!
         let barely = LumaPreset.barely.profiles!
         let subtle = LumaPreset.subtle.profiles!
         let balanced = LumaPreset.balanced.profiles!
         let high = LumaPreset.high.profiles!
         let deep = LumaPreset.deep.profiles!
 
+        XCTAssertGreaterThan(clear.night.kelvin, barely.night.kelvin)
         XCTAssertGreaterThan(barely.night.kelvin, subtle.night.kelvin)
         XCTAssertGreaterThan(subtle.night.kelvin, balanced.night.kelvin)
         XCTAssertGreaterThan(balanced.night.kelvin, high.night.kelvin)
         XCTAssertGreaterThan(high.night.kelvin, deep.night.kelvin)
+        XCTAssertLessThanOrEqual(clear.night.dimOpacity, barely.night.dimOpacity)
         XCTAssertLessThan(barely.night.dimOpacity, subtle.night.dimOpacity)
         XCTAssertLessThan(subtle.night.dimOpacity, balanced.night.dimOpacity)
         XCTAssertLessThan(balanced.night.dimOpacity, high.night.dimOpacity)
@@ -20,7 +23,7 @@ final class LumaPresetTests: XCTestCase {
     }
 
     func testPresetProfilesStayInsideDisplayLimits() {
-        XCTAssertGreaterThanOrEqual(LumaPreset.allCases.count, 8)
+        XCTAssertGreaterThanOrEqual(LumaPreset.allCases.count, 9)
 
         for preset in LumaPreset.allCases where preset != .custom {
             let profiles = preset.profiles!

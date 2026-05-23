@@ -1,6 +1,7 @@
 import Foundation
 
 enum LumaPreset: String, Codable, CaseIterable, Identifiable {
+    case clear
     case barely
     case subtle
     case balanced
@@ -14,6 +15,7 @@ enum LumaPreset: String, Codable, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
+        case .clear: "Clear"
         case .barely: "Barely"
         case .subtle: "Subtle"
         case .balanced: "Balanced"
@@ -27,6 +29,7 @@ enum LumaPreset: String, Codable, CaseIterable, Identifiable {
 
     var detail: String {
         switch self {
+        case .clear: "Near-neutral with no dimming"
         case .barely: "Almost neutral, light dimming"
         case .subtle: "Low warmth and dimming"
         case .balanced: "Daily default"
@@ -40,6 +43,12 @@ enum LumaPreset: String, Codable, CaseIterable, Identifiable {
 
     var profiles: PresetProfiles? {
         switch self {
+        case .clear:
+            PresetProfiles(
+                day: DisplayProfile(kelvin: 6500, brightness: 100, dimOpacity: 0),
+                night: DisplayProfile(kelvin: 5000, brightness: 100, dimOpacity: 0),
+                sleep: DisplayProfile(kelvin: 3600, brightness: 95, dimOpacity: 2)
+            )
         case .barely:
             PresetProfiles(
                 day: DisplayProfile(kelvin: 4800, brightness: 100, dimOpacity: 0),
