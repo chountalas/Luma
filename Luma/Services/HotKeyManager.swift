@@ -3,13 +3,40 @@ import Foundation
 
 @MainActor
 final class HotKeyManager {
-    enum Action: UInt32, CaseIterable {
+    enum Action {
+        case pause
+        case warmer
+        case cooler
+        case brighter
+        case dimmer
+        case reset
+    }
+
+    private enum RegisteredHotKey: UInt32 {
         case pause = 1
         case warmer = 2
         case cooler = 3
         case brighter = 4
         case dimmer = 5
         case reset = 6
+        case legacyPause = 7
+
+        var action: Action {
+            switch self {
+            case .pause, .legacyPause:
+                .pause
+            case .warmer:
+                .warmer
+            case .cooler:
+                .cooler
+            case .brighter:
+                .brighter
+            case .dimmer:
+                .dimmer
+            case .reset:
+                .reset
+            }
+        }
     }
 
     var handler: ((Action) -> Void)?
@@ -24,12 +51,13 @@ final class HotKeyManager {
         }
 
         installHandler()
-        register(action: .pause, keyCode: kVK_ANSI_P)
-        register(action: .warmer, keyCode: kVK_DownArrow)
-        register(action: .cooler, keyCode: kVK_UpArrow)
-        register(action: .brighter, keyCode: kVK_PageUp)
-        register(action: .dimmer, keyCode: kVK_PageDown)
-        register(action: .reset, keyCode: kVK_Escape)
+        register(hotKey: .pause, keyCode: kVK_ANSI_L, modifiers: UInt32(optionKey | cmdKey))
+        register(hotKey: .legacyPause, keyCode: kVK_ANSI_P)
+        register(hotKey: .warmer, keyCode: kVK_DownArrow)
+        register(hotKey: .cooler, keyCode: kVK_UpArrow)
+        register(hotKey: .brighter, keyCode: kVK_PageUp)
+        register(hotKey: .dimmer, keyCode: kVK_PageDown)
+        register(hotKey: .reset, keyCode: kVK_Escape)
     }
 
     func unregister() {
@@ -68,9 +96,9 @@ final class HotKeyManager {
                 )
 
                 let manager = Unmanaged<HotKeyManager>.fromOpaque(userData).takeUnretainedValue()
-                if let action = Action(rawValue: hotKeyID.id) {
+                if let hotKey = RegisteredHotKey(rawValue: hotKeyID.id) {
                     Task { @MainActor in
-                        manager.handler?(action)
+                        manager.handler?(hotKey.action)
                     }
                 }
                 return noErr
@@ -82,10 +110,13 @@ final class HotKeyManager {
         )
     }
 
-    private func register(action: Action, keyCode: Int) {
-        let hotKeyID = EventHotKeyID(signature: OSType(0x4C554D41), id: action.rawValue)
+    private func register(
+        hotKey: RegisteredHotKey,
+        keyCode: Int,
+        modifiers: UInt32 = UInt32(controlKey | optionKey)
+    ) {
+        let hotKeyID = EventHotKeyID(signature: OSType(0x4C554D41), id: hotKey.rawValue)
         var ref: EventHotKeyRef?
-        let modifiers = UInt32(controlKey | optionKey)
         let status = RegisterEventHotKey(
             UInt32(keyCode),
             modifiers,
