@@ -2,6 +2,10 @@
 
 Luma is a clean-room, native Apple Silicon macOS menu bar utility for screen warmth, dimming, and scheduled day/night display profiles.
 
+<p align="center">
+  <img src="docs/luma-panel.png" alt="Luma menu bar panel showing the day/night arc, strength presets, and warmth, brightness, and dim sliders" width="360">
+</p>
+
 Luma does not reuse Iris source code, assets, license behavior, or private app data. It is not affiliated with Iris, iristech.co, or any Iris product.
 
 Presets let you switch the overall display effect between Clear, Barely, Subtle, Balanced, High, Deep, Reading, Late Night, and Custom. Presets update day, night, and sleep profiles together; manual slider changes switch the app to Custom.
