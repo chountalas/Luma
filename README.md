@@ -29,7 +29,7 @@ Presets let you switch the overall display effect between Clear, Barely, Subtle,
 
 Download the latest `Luma-*-arm64.dmg` from the [Releases](https://github.com/chountalas/Luma/releases) page, open it, and drag Luma into Applications.
 
-Public builds are signed ad hoc, so on first launch macOS Gatekeeper may warn that the developer cannot be verified. Right-click the app and choose **Open**, then confirm. To build from source instead, see below.
+Public builds are signed with a Developer ID and notarized by Apple, so they open without a Gatekeeper warning. To build from source instead, see below.
 
 ## Privacy
 

@@ -12,6 +12,13 @@ ZIP_PATH="$DIST_DIR/$APP_NAME-$VERSION-arm64.zip"
 DMG_PATH="$DIST_DIR/$APP_NAME-$VERSION-arm64.dmg"
 SIGN_IDENTITY="${CODE_SIGN_IDENTITY:--}"
 
+# Ad-hoc signing (-) cannot use a secure timestamp; Developer ID notarization requires one.
+if [[ "$SIGN_IDENTITY" == "-" ]]; then
+  TIMESTAMP_FLAG="--timestamp=none"
+else
+  TIMESTAMP_FLAG="--timestamp"
+fi
+
 cd "$ROOT_DIR"
 
 swift script/generate_icon.swift
@@ -37,7 +44,7 @@ if [[ ! -d "$APP_PATH" ]]; then
   exit 1
 fi
 
-codesign --force --deep --options runtime --timestamp=none --sign "$SIGN_IDENTITY" "$APP_PATH"
+codesign --force --deep --options runtime "$TIMESTAMP_FLAG" --sign "$SIGN_IDENTITY" "$APP_PATH"
 codesign --verify --deep --strict "$APP_PATH"
 
 ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$ZIP_PATH"
