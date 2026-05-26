@@ -6,6 +6,27 @@ Luma does not reuse Iris source code, assets, license behavior, or private app d
 
 Presets let you switch the overall display effect between Clear, Barely, Subtle, Balanced, High, Deep, Reading, Late Night, and Custom. Presets update day, night, and sleep profiles together; manual slider changes switch the app to Custom.
 
+## Features
+
+- Warmth (color temperature) and dimming control from the menu bar
+- Day, Night, and Sleep profiles that switch automatically
+- Nine built-in presets plus a Custom mode driven by manual sliders
+- Sunset/sunrise scheduling from your latitude/longitude, or a manual time window
+- Global hotkeys for quick adjustments without opening the app
+- Optional one-time importer for existing Iris visual and schedule settings
+- CoreGraphics gamma adjustment with a click-through overlay fallback for displays that reject direct gamma changes
+
+## Requirements
+
+- macOS 14.0 or later
+- Apple Silicon Mac
+
+## Download And Install
+
+Download the latest `Luma-*-arm64.dmg` from the [Releases](https://github.com/chountalas/Luma/releases) page, open it, and drag Luma into Applications.
+
+Public builds are signed ad hoc, so on first launch macOS Gatekeeper may warn that the developer cannot be verified. Right-click the app and choose **Open**, then confirm. To build from source instead, see below.
+
 ## Privacy
 
 Luma stores its own settings in the local macOS defaults store for the app. The optional Iris importer reads only the current user's local Iris preferences plist and maps visual and schedule values into Luma settings. It does not read Iris source code, license data, account data, or private app data.
