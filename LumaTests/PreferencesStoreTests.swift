@@ -44,6 +44,28 @@ final class PreferencesStoreTests: XCTestCase {
         XCTAssertTrue(defaults.bool(forKey: presetProfileMigrationKey))
     }
 
+    func testLegacySettingsWithoutPresetKeyPreserveProfiles() throws {
+        let defaults = try makeDefaults()
+        let data = """
+        {
+          "day": { "kelvin": 3100, "brightness": 100, "dimOpacity": 1 },
+          "night": { "kelvin": 2100, "brightness": 88, "dimOpacity": 12 },
+          "sleep": { "kelvin": 1700, "brightness": 70, "dimOpacity": 25 },
+          "launchAtLogin": false,
+          "useOverlayFallback": true
+        }
+        """.data(using: .utf8)!
+        defaults.set(data, forKey: settingsKey)
+
+        let store = PreferencesStore(defaults: defaults)
+
+        XCTAssertEqual(store.settings.selectedPreset, .balanced)
+        XCTAssertEqual(store.settings.day, DisplayProfile(kelvin: 3100, brightness: 100, dimOpacity: 1))
+        XCTAssertEqual(store.settings.night, DisplayProfile(kelvin: 2100, brightness: 88, dimOpacity: 12))
+        XCTAssertEqual(store.settings.sleep, DisplayProfile(kelvin: 1700, brightness: 70, dimOpacity: 25))
+        XCTAssertTrue(defaults.bool(forKey: presetProfileMigrationKey))
+    }
+
     private func makeDefaults() throws -> UserDefaults {
         let suiteName = "LumaTests.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))

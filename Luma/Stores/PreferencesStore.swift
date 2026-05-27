@@ -20,9 +20,12 @@ final class PreferencesStore: ObservableObject {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-        self.settings = Self.loadSettings(defaults: defaults, key: settingsKey)
+        let loadedSettings = Self.loadSettings(defaults: defaults, key: settingsKey)
+        self.settings = loadedSettings.settings
         if !defaults.bool(forKey: presetProfileMigrationKey) {
-            settings = Self.refreshSelectedPresetProfiles(settings)
+            if loadedSettings.hasStoredSelectedPreset {
+                settings = Self.refreshSelectedPresetProfiles(settings)
+            }
             defaults.set(true, forKey: presetProfileMigrationKey)
             save()
         }
@@ -143,12 +146,17 @@ final class PreferencesStore: ObservableObject {
         }
     }
 
-    private static func loadSettings(defaults: UserDefaults, key: String) -> LumaSettings {
+    private static func loadSettings(defaults: UserDefaults, key: String) -> LoadedSettings {
         guard let data = defaults.data(forKey: key),
               let decoded = try? JSONDecoder().decode(LumaSettings.self, from: data) else {
-            return LumaSettings()
+            return LoadedSettings(settings: LumaSettings(), hasStoredSelectedPreset: false)
         }
-        return decoded
+
+        let storedObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        return LoadedSettings(
+            settings: decoded,
+            hasStoredSelectedPreset: storedObject?["selectedPreset"] != nil
+        )
     }
 
     private static func refreshSelectedPresetProfiles(_ settings: LumaSettings) -> LumaSettings {
@@ -204,4 +212,9 @@ final class PreferencesStore: ObservableObject {
     private func clamped(_ value: Double, _ minValue: Double, _ maxValue: Double) -> Double {
         min(max(value, minValue), maxValue)
     }
+}
+
+private struct LoadedSettings {
+    var settings: LumaSettings
+    var hasStoredSelectedPreset: Bool
 }
