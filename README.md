@@ -27,6 +27,18 @@ Presets let you switch the overall display effect between Clear, Light, Subtle, 
 
 ## Download And Install
 
+With Homebrew:
+
+```bash
+brew install --cask chountalas/tap/luma
+```
+
+To update later:
+
+```bash
+brew upgrade --cask luma
+```
+
 Download the latest `Luma-*-arm64.dmg` from the [Releases](https://github.com/chountalas/Luma/releases) page, open it, and drag Luma into Applications.
 
 Public builds are signed with a Developer ID and notarized by Apple, so they open without a Gatekeeper warning. To build from source instead, see below.
@@ -55,8 +67,8 @@ Quit other display-filter apps before using Luma as the daily driver. Running mu
 
 This produces:
 
-- `dist/Luma-0.1.4-arm64.dmg`
-- `dist/Luma-0.1.4-arm64.zip`
+- `dist/Luma-0.1.5-arm64.dmg`
+- `dist/Luma-0.1.5-arm64.zip`
 - `dist/checksums.txt`
 
 The local package is signed ad hoc by default. For a no-warning public download, set `CODE_SIGN_IDENTITY` to a Developer ID Application certificate and notarize the DMG.
