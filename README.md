@@ -8,7 +8,7 @@ Luma is a clean-room, native Apple Silicon macOS menu bar utility for screen war
 
 Luma does not reuse Iris source code, assets, license behavior, or private app data. It is not affiliated with Iris, iristech.co, or any Iris product.
 
-Presets let you switch the overall display effect between Clear, Barely, Subtle, Balanced, High, Deep, Reading, Late Night, and Custom. Presets update day, night, and sleep profiles together; manual slider changes switch the app to Custom.
+Presets let you switch the overall display effect between Clear, Light, Subtle, Balanced, Strong, Deep, Reading, Late Night, and Custom. Presets update day, night, and sleep profiles together; manual slider changes switch the app to Custom.
 
 ## Features
 
