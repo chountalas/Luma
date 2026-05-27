@@ -3,23 +3,28 @@ import XCTest
 
 final class LumaPresetTests: XCTestCase {
     func testPresetProfilesChangeStrength() {
-        let clear = LumaPreset.clear.profiles!
-        let barely = LumaPreset.barely.profiles!
-        let subtle = LumaPreset.subtle.profiles!
-        let balanced = LumaPreset.balanced.profiles!
-        let high = LumaPreset.high.profiles!
-        let deep = LumaPreset.deep.profiles!
+        let presets: [LumaPreset] = [.clear, .barely, .subtle, .balanced, .high, .deep]
+        let profiles = presets.map { $0.profiles! }
 
-        XCTAssertGreaterThan(clear.night.kelvin, barely.night.kelvin)
-        XCTAssertGreaterThan(barely.night.kelvin, subtle.night.kelvin)
-        XCTAssertGreaterThan(subtle.night.kelvin, balanced.night.kelvin)
-        XCTAssertGreaterThan(balanced.night.kelvin, high.night.kelvin)
-        XCTAssertGreaterThan(high.night.kelvin, deep.night.kelvin)
-        XCTAssertLessThanOrEqual(clear.night.dimOpacity, barely.night.dimOpacity)
-        XCTAssertLessThan(barely.night.dimOpacity, subtle.night.dimOpacity)
-        XCTAssertLessThan(subtle.night.dimOpacity, balanced.night.dimOpacity)
-        XCTAssertLessThan(balanced.night.dimOpacity, high.night.dimOpacity)
-        XCTAssertLessThan(high.night.dimOpacity, deep.night.dimOpacity)
+        for index in 1..<profiles.count {
+            XCTAssertGreaterThan(profiles[index - 1].day.kelvin, profiles[index].day.kelvin)
+            XCTAssertGreaterThan(profiles[index - 1].night.kelvin, profiles[index].night.kelvin)
+            XCTAssertGreaterThan(profiles[index - 1].sleep.kelvin, profiles[index].sleep.kelvin)
+            XCTAssertLessThanOrEqual(profiles[index - 1].day.dimOpacity, profiles[index].day.dimOpacity)
+            XCTAssertLessThan(profiles[index - 1].night.dimOpacity, profiles[index].night.dimOpacity)
+            XCTAssertLessThan(profiles[index - 1].sleep.dimOpacity, profiles[index].sleep.dimOpacity)
+        }
+    }
+
+    func testEachPresetGetsWarmerThroughPhases() {
+        for preset in LumaPreset.allCases where preset != .custom {
+            let profiles = preset.profiles!
+
+            XCTAssertGreaterThan(profiles.day.kelvin, profiles.night.kelvin)
+            XCTAssertGreaterThan(profiles.night.kelvin, profiles.sleep.kelvin)
+            XCTAssertLessThanOrEqual(profiles.day.dimOpacity, profiles.night.dimOpacity)
+            XCTAssertLessThan(profiles.night.dimOpacity, profiles.sleep.dimOpacity)
+        }
     }
 
     func testPresetProfilesStayInsideDisplayLimits() {

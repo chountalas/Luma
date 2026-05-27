@@ -9,7 +9,7 @@ struct MenuBarView: View {
 
     private let editablePhases: [ActivePhase] = [.day, .night, .sleep]
     private let presetOptions = LumaPreset.allCases
-    private let quickPresetOptions: [LumaPreset] = [.clear, .subtle, .balanced, .high, .reading, .deep]
+    private let quickPresetOptions: [LumaPreset] = [.clear, .barely, .subtle, .balanced, .high, .deep]
 
     var body: some View {
         VStack(spacing: 0) {
