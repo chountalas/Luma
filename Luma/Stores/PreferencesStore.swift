@@ -16,10 +16,16 @@ final class PreferencesStore: ObservableObject {
     private let defaults: UserDefaults
     private let settingsKey = "LumaSettings.v1"
     private let launchAtLoginMigrationKey = "LumaSettings.launchAtLoginDefaulted.v2"
+    private let presetProfileMigrationKey = "LumaSettings.presetProfilesRetuned.v3"
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.settings = Self.loadSettings(defaults: defaults, key: settingsKey)
+        if !defaults.bool(forKey: presetProfileMigrationKey) {
+            settings = Self.refreshSelectedPresetProfiles(settings)
+            defaults.set(true, forKey: presetProfileMigrationKey)
+            save()
+        }
         if !defaults.bool(forKey: launchAtLoginMigrationKey) {
             settings.launchAtLogin = true
             defaults.set(true, forKey: launchAtLoginMigrationKey)
@@ -143,6 +149,18 @@ final class PreferencesStore: ObservableObject {
             return LumaSettings()
         }
         return decoded
+    }
+
+    private static func refreshSelectedPresetProfiles(_ settings: LumaSettings) -> LumaSettings {
+        guard let profiles = settings.selectedPreset.profiles else {
+            return settings
+        }
+
+        var migrated = settings
+        migrated.day = profiles.day
+        migrated.night = profiles.night
+        migrated.sleep = profiles.sleep
+        return migrated
     }
 
     private func syncLaunchAtLogin() {

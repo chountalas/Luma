@@ -27,6 +27,7 @@
 		D5469B2F64F4B17C5ED965C6 /* SunCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A5B814FC5D99A966652685 /* SunCalculatorTests.swift */; };
 		D74E81A6B5D8158C0723D221 /* DisplayProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F48E667718E73B1D8602F /* DisplayProfile.swift */; };
 		D8B5CBA2CCB467CBB66DC3C2 /* ColorTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D40142EEEC9755BCEF7E13 /* ColorTemperature.swift */; };
+		F6454A349CC94685BF6A6DE5 /* PreferencesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13652FC913B1FACEEAB8446 /* PreferencesStoreTests.swift */; };
 		FFD76A09DEFE3E5CB5BDE8CD /* LumaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8622749F5D1B6614FE2B1EC3 /* LumaApp.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		DF8C531E464C9C4EDE2648C6 /* Luma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Luma.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F839E16478C7F0B43BB928 /* RuntimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeState.swift; sourceTree = "<group>"; };
 		E5C7AFF41B1AD55A2BA25BC6 /* LumaPresetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumaPresetTests.swift; sourceTree = "<group>"; };
+		F13652FC913B1FACEEAB8446 /* PreferencesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesStoreTests.swift; sourceTree = "<group>"; };
 		F2D40142EEEC9755BCEF7E13 /* ColorTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTemperature.swift; sourceTree = "<group>"; };
 		F31CA152F60B444CE0629449 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F66B2FB3309FF70F7711E562 /* PreferencesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesStore.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				2987E7E74436B304FF2D46E0 /* ColorTemperatureTests.swift */,
 				8173B8A494DF3FFAAC687170 /* Info.plist */,
 				E5C7AFF41B1AD55A2BA25BC6 /* LumaPresetTests.swift */,
+				F13652FC913B1FACEEAB8446 /* PreferencesStoreTests.swift */,
 				B928C23520C66A814B3D7C24 /* ScheduleSettingsTests.swift */,
 				93A5B814FC5D99A966652685 /* SunCalculatorTests.swift */,
 			);
@@ -286,6 +289,7 @@
 			files = (
 				82331AC0095C1974F3EF3A9C /* ColorTemperatureTests.swift in Sources */,
 				863030BA381470AB83C2BB62 /* LumaPresetTests.swift in Sources */,
+				F6454A349CC94685BF6A6DE5 /* PreferencesStoreTests.swift in Sources */,
 				64370C9ADC68CD983BCB7471 /* ScheduleSettingsTests.swift in Sources */,
 				D5469B2F64F4B17C5ED965C6 /* SunCalculatorTests.swift in Sources */,
 			);
