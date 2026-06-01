@@ -29,6 +29,9 @@ struct LumaApp: App {
         } label: {
             Image(systemName: displayController.runtime.isPaused ? "moon.zzz.fill" : "sun.max.circle.fill")
                 .symbolRenderingMode(.hierarchical)
+                .onAppear {
+                    wireServices()
+                }
         }
         .menuBarExtraStyle(.window)
 
