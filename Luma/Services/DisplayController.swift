@@ -11,9 +11,12 @@ final class DisplayController: ObservableObject {
     private var timer: Timer?
     private var hasInstalledObservers = false
     private var transitionTask: Task<Void, Never>?
+    private var recoveryTask: Task<Void, Never>?
+    private var displayMaintenanceActivity: NSObjectProtocol?
 
     func start(settings: LumaSettings) {
         currentSettings = settings
+        beginDisplayMaintenanceActivity()
         installDisplayObservers()
         scheduleTick()
         applyCurrentPhase(animated: false)
@@ -76,14 +79,32 @@ final class DisplayController: ObservableObject {
 
     private func scheduleTick() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { [weak self] _ in
+        let timer = Timer(timeInterval: 15, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.applyCurrentPhase(animated: true)
             }
         }
+        timer.tolerance = 2
+        RunLoop.main.add(timer, forMode: .common)
+        self.timer = timer
+    }
+
+    private func beginDisplayMaintenanceActivity() {
+        guard displayMaintenanceActivity == nil else {
+            return
+        }
+
+        displayMaintenanceActivity = ProcessInfo.processInfo.beginActivity(
+            options: [.userInitiatedAllowingIdleSystemSleep],
+            reason: "Keep Luma display adjustments active"
+        )
     }
 
     private func applyCurrentPhase(animated: Bool) {
+        if !animated {
+            transitionTask?.cancel()
+        }
+
         if runtime.isPaused {
             runtime.activePhase = .paused
             resetDisplay()
@@ -164,12 +185,67 @@ final class DisplayController: ObservableObject {
         }
         hasInstalledObservers = true
 
-        NSWorkspace.shared.notificationCenter.addObserver(
-            forName: NSWorkspace.screensDidWakeNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            Task { @MainActor in
+        let workspaceNotificationCenter = NSWorkspace.shared.notificationCenter
+        let workspaceNotifications: [Notification.Name] = [
+            NSWorkspace.didWakeNotification,
+            NSWorkspace.screensDidWakeNotification,
+            NSWorkspace.sessionDidBecomeActiveNotification
+        ]
+
+        for notificationName in workspaceNotifications {
+            workspaceNotificationCenter.addObserver(
+                forName: notificationName,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in
+                    self?.scheduleRecoveryReapply()
+                }
+            }
+        }
+
+        let appNotifications: [Notification.Name] = [
+            NSApplication.didBecomeActiveNotification,
+            NSApplication.didChangeScreenParametersNotification
+        ]
+
+        for notificationName in appNotifications {
+            NotificationCenter.default.addObserver(
+                forName: notificationName,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in
+                    self?.scheduleRecoveryReapply()
+                }
+            }
+        }
+    }
+
+    private func scheduleRecoveryReapply() {
+        recoveryTask?.cancel()
+        recoveryTask = Task { @MainActor [weak self] in
+            let delays: [Duration] = [
+                .zero,
+                .milliseconds(250),
+                .seconds(1),
+                .seconds(3),
+                .seconds(8)
+            ]
+
+            for delay in delays {
+                if Task.isCancelled {
+                    return
+                }
+
+                if delay != .zero {
+                    try? await Task.sleep(for: delay)
+                }
+
+                if Task.isCancelled {
+                    return
+                }
+
                 self?.applyCurrentPhase(animated: false)
             }
         }
