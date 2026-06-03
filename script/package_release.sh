@@ -2,7 +2,7 @@
 set -euo pipefail
 
 APP_NAME="Luma"
-VERSION="${VERSION:-0.1.5}"
+VERSION="${VERSION:-0.1.7}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DERIVED_DATA="$ROOT_DIR/DerivedData"
 DIST_DIR="$ROOT_DIR/dist"
