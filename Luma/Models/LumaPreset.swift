@@ -46,20 +46,20 @@ enum LumaPreset: String, Codable, CaseIterable, Identifiable {
         case .clear:
             PresetProfiles(
                 day: DisplayProfile(kelvin: 6500, brightness: 100, dimOpacity: 0),
-                night: DisplayProfile(kelvin: 5000, brightness: 100, dimOpacity: 0),
-                sleep: DisplayProfile(kelvin: 3600, brightness: 95, dimOpacity: 2)
+                night: DisplayProfile(kelvin: 6000, brightness: 100, dimOpacity: 0),
+                sleep: DisplayProfile(kelvin: 5200, brightness: 98, dimOpacity: 1)
             )
         case .barely:
             PresetProfiles(
-                day: DisplayProfile(kelvin: 5600, brightness: 100, dimOpacity: 0),
-                night: DisplayProfile(kelvin: 4200, brightness: 98, dimOpacity: 1),
-                sleep: DisplayProfile(kelvin: 3200, brightness: 94, dimOpacity: 4)
+                day: DisplayProfile(kelvin: 5800, brightness: 100, dimOpacity: 0),
+                night: DisplayProfile(kelvin: 5300, brightness: 99, dimOpacity: 1),
+                sleep: DisplayProfile(kelvin: 4600, brightness: 96, dimOpacity: 3)
             )
         case .subtle:
             PresetProfiles(
-                day: DisplayProfile(kelvin: 4700, brightness: 100, dimOpacity: 0),
-                night: DisplayProfile(kelvin: 3400, brightness: 95, dimOpacity: 4),
-                sleep: DisplayProfile(kelvin: 2600, brightness: 88, dimOpacity: 10)
+                day: DisplayProfile(kelvin: 5100, brightness: 100, dimOpacity: 0),
+                night: DisplayProfile(kelvin: 4600, brightness: 98, dimOpacity: 2),
+                sleep: DisplayProfile(kelvin: 3900, brightness: 94, dimOpacity: 6)
             )
         case .balanced:
             PresetProfiles(
@@ -69,27 +69,27 @@ enum LumaPreset: String, Codable, CaseIterable, Identifiable {
             )
         case .high:
             PresetProfiles(
-                day: DisplayProfile(kelvin: 3000, brightness: 98, dimOpacity: 2),
-                night: DisplayProfile(kelvin: 1900, brightness: 82, dimOpacity: 16),
-                sleep: DisplayProfile(kelvin: 1500, brightness: 68, dimOpacity: 28)
+                day: DisplayProfile(kelvin: 3600, brightness: 99, dimOpacity: 1),
+                night: DisplayProfile(kelvin: 3000, brightness: 92, dimOpacity: 7),
+                sleep: DisplayProfile(kelvin: 2500, brightness: 84, dimOpacity: 16)
             )
         case .deep:
             PresetProfiles(
-                day: DisplayProfile(kelvin: 2600, brightness: 96, dimOpacity: 4),
-                night: DisplayProfile(kelvin: 1500, brightness: 74, dimOpacity: 24),
-                sleep: DisplayProfile(kelvin: 1200, brightness: 58, dimOpacity: 38)
+                day: DisplayProfile(kelvin: 3000, brightness: 97, dimOpacity: 3),
+                night: DisplayProfile(kelvin: 2400, brightness: 86, dimOpacity: 13),
+                sleep: DisplayProfile(kelvin: 1900, brightness: 72, dimOpacity: 26)
             )
         case .reading:
             PresetProfiles(
-                day: DisplayProfile(kelvin: 3600, brightness: 100, dimOpacity: 0),
-                night: DisplayProfile(kelvin: 2400, brightness: 86, dimOpacity: 12),
-                sleep: DisplayProfile(kelvin: 1900, brightness: 72, dimOpacity: 24)
+                day: DisplayProfile(kelvin: 4000, brightness: 100, dimOpacity: 0),
+                night: DisplayProfile(kelvin: 3300, brightness: 92, dimOpacity: 5),
+                sleep: DisplayProfile(kelvin: 2700, brightness: 82, dimOpacity: 14)
             )
         case .lateNight:
             PresetProfiles(
-                day: DisplayProfile(kelvin: 2400, brightness: 92, dimOpacity: 6),
-                night: DisplayProfile(kelvin: 1300, brightness: 66, dimOpacity: 32),
-                sleep: DisplayProfile(kelvin: 1000, brightness: 45, dimOpacity: 50)
+                day: DisplayProfile(kelvin: 3200, brightness: 95, dimOpacity: 4),
+                night: DisplayProfile(kelvin: 2300, brightness: 78, dimOpacity: 18),
+                sleep: DisplayProfile(kelvin: 1700, brightness: 60, dimOpacity: 36)
             )
         case .custom:
             nil

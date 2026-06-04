@@ -1,5 +1,10 @@
 import Foundation
 
+struct ScheduledProfile: Equatable {
+    var phase: ActivePhase
+    var profile: DisplayProfile
+}
+
 struct LumaSettings: Codable, Equatable {
     var selectedPreset: LumaPreset = .balanced
     var day = DisplayProfile.dayDefault
@@ -62,5 +67,48 @@ struct LumaSettings: Codable, Equatable {
         case .sleep: sleep
         case .paused: day
         }
+    }
+
+    func scheduledProfile(at date: Date = Date(), calendar: Calendar = .current) -> ScheduledProfile {
+        let phase = schedule.phase(at: date, calendar: calendar)
+        if let transition = schedule.phaseTransition(at: date, calendar: calendar),
+           transition.from == .sleep || transition.to == .sleep {
+            return ScheduledProfile(
+                phase: phase,
+                profile: DisplayProfile.interpolated(
+                    from: profile(for: transition.from),
+                    to: profile(for: transition.to),
+                    progress: transition.progress
+                )
+            )
+        }
+
+        if phase == .sleep {
+            return ScheduledProfile(phase: phase, profile: sleep)
+        }
+
+        if let solarNightProgress = schedule.solarNightProgress(at: date, calendar: calendar) {
+            return ScheduledProfile(
+                phase: phase,
+                profile: DisplayProfile.interpolated(
+                    from: day,
+                    to: night,
+                    progress: solarNightProgress
+                )
+            )
+        }
+
+        if let transition = schedule.phaseTransition(at: date, calendar: calendar) {
+            return ScheduledProfile(
+                phase: phase,
+                profile: DisplayProfile.interpolated(
+                    from: profile(for: transition.from),
+                    to: profile(for: transition.to),
+                    progress: transition.progress
+                )
+            )
+        }
+
+        return ScheduledProfile(phase: phase, profile: profile(for: phase))
     }
 }

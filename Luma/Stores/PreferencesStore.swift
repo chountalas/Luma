@@ -16,7 +16,8 @@ final class PreferencesStore: ObservableObject {
     private let defaults: UserDefaults
     private let settingsKey = "LumaSettings.v1"
     private let launchAtLoginMigrationKey = "LumaSettings.launchAtLoginDefaulted.v2"
-    private let presetProfileMigrationKey = "LumaSettings.presetProfilesRetuned.v3"
+    private let presetProfileMigrationKey = "LumaSettings.presetProfilesRetuned.v4"
+    private static let legacyTransitionSeconds: Double = 3_600
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -24,7 +25,7 @@ final class PreferencesStore: ObservableObject {
         self.settings = loadedSettings.settings
         if !defaults.bool(forKey: presetProfileMigrationKey) {
             if loadedSettings.hasStoredSelectedPreset {
-                settings = Self.refreshSelectedPresetProfiles(settings)
+                settings = Self.refreshSelectedPresetProfilesAndTransitionDefaults(settings)
             }
             defaults.set(true, forKey: presetProfileMigrationKey)
             save()
@@ -159,7 +160,7 @@ final class PreferencesStore: ObservableObject {
         )
     }
 
-    private static func refreshSelectedPresetProfiles(_ settings: LumaSettings) -> LumaSettings {
+    private static func refreshSelectedPresetProfilesAndTransitionDefaults(_ settings: LumaSettings) -> LumaSettings {
         guard let profiles = settings.selectedPreset.profiles else {
             return settings
         }
@@ -168,6 +169,12 @@ final class PreferencesStore: ObservableObject {
         migrated.day = profiles.day
         migrated.night = profiles.night
         migrated.sleep = profiles.sleep
+        if migrated.schedule.dayNightTransitionSeconds == legacyTransitionSeconds {
+            migrated.schedule.dayNightTransitionSeconds = ScheduleSettings.defaultDayNightTransitionSeconds
+        }
+        if migrated.schedule.sleepTransitionSeconds == legacyTransitionSeconds {
+            migrated.schedule.sleepTransitionSeconds = ScheduleSettings.defaultSleepTransitionSeconds
+        }
         return migrated
     }
 
