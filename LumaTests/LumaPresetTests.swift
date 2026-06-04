@@ -27,6 +27,16 @@ final class LumaPresetTests: XCTestCase {
         }
     }
 
+    func testEverydayPresetsKeepDayNightChangesGentle() throws {
+        let subtle = try XCTUnwrap(LumaPreset.subtle.profiles)
+        let balanced = try XCTUnwrap(LumaPreset.balanced.profiles)
+
+        XCTAssertLessThanOrEqual(subtle.day.kelvin - subtle.night.kelvin, 600)
+        XCTAssertLessThanOrEqual(balanced.day.kelvin - balanced.night.kelvin, 700)
+        XCTAssertLessThanOrEqual(subtle.night.dimOpacity - subtle.day.dimOpacity, 2)
+        XCTAssertLessThanOrEqual(balanced.night.dimOpacity - balanced.day.dimOpacity, 3)
+    }
+
     func testPresetProfilesStayInsideDisplayLimits() {
         XCTAssertGreaterThanOrEqual(LumaPreset.allCases.count, 9)
 

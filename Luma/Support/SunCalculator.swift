@@ -41,6 +41,55 @@ enum SunCalculator {
         )
     }
 
+    static func solarElevation(on date: Date, latitude: Double, longitude: Double, calendar: Calendar = .current) -> Double? {
+        guard latitude.isFinite,
+              longitude.isFinite,
+              (-90...90).contains(latitude),
+              (-180...180).contains(longitude) else {
+            return nil
+        }
+
+        let dayStart = calendar.startOfDay(for: date)
+        let dayOfYear = calendar.ordinality(of: .day, in: .year, for: dayStart) ?? 1
+        let components = calendar.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
+        let hour = Double(components.hour ?? 0)
+        let minute = Double(components.minute ?? 0)
+        let second = Double(components.second ?? 0)
+        let nanosecond = Double(components.nanosecond ?? 0)
+        let localMinutes = (hour * 60) + minute + (second / 60) + (nanosecond / 60_000_000_000)
+        let fractionalHour = localMinutes / 60
+        let fractionalYear = (2 * Double.pi / 365) * (Double(dayOfYear) - 1 + ((fractionalHour - 12) / 24))
+
+        let equationOfTime = 229.18 * (
+            0.000075
+                + 0.001868 * cos(fractionalYear)
+                - 0.032077 * sin(fractionalYear)
+                - 0.014615 * cos(2 * fractionalYear)
+                - 0.040849 * sin(2 * fractionalYear)
+        )
+        let declination = 0.006918
+            - 0.399912 * cos(fractionalYear)
+            + 0.070257 * sin(fractionalYear)
+            - 0.006758 * cos(2 * fractionalYear)
+            + 0.000907 * sin(2 * fractionalYear)
+            - 0.002697 * cos(3 * fractionalYear)
+            + 0.00148 * sin(3 * fractionalYear)
+        let timezoneOffsetHours = Double(calendar.timeZone.secondsFromGMT(for: date)) / 3600
+        let timeOffset = equationOfTime + (4 * longitude) - (60 * timezoneOffsetHours)
+        let trueSolarMinutes = normalizedMinutes(localMinutes + timeOffset)
+        var hourAngle = (trueSolarMinutes / 4) - 180
+        if hourAngle < -180 {
+            hourAngle += 360
+        }
+
+        let latitudeRadians = degreesToRadians(latitude)
+        let hourAngleRadians = degreesToRadians(hourAngle)
+        let cosZenith = sin(latitudeRadians) * sin(declination)
+            + cos(latitudeRadians) * cos(declination) * cos(hourAngleRadians)
+        let zenith = acos(min(max(cosZenith, -1), 1))
+        return 90 - radiansToDegrees(zenith)
+    }
+
     private static func eventHours(dayOfYear: Int, latitude: Double, longitudeHour: Double, isSunrise: Bool) -> Double? {
         let zenith = 90.833
         let t = Double(dayOfYear) + ((isSunrise ? 6 : 18) - longitudeHour) / 24
@@ -82,6 +131,11 @@ enum SunCalculator {
     private static func normalizedHours(_ hours: Double) -> Double {
         let value = hours.truncatingRemainder(dividingBy: 24)
         return value < 0 ? value + 24 : value
+    }
+
+    private static func normalizedMinutes(_ minutes: Double) -> Double {
+        let value = minutes.truncatingRemainder(dividingBy: 1_440)
+        return value < 0 ? value + 1_440 : value
     }
 
     private static func degreesToRadians(_ degrees: Double) -> Double {

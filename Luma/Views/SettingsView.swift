@@ -64,8 +64,20 @@ struct SettingsView: View {
             }
 
             Section("Transitions") {
-                numericField("Day/night seconds", value: $preferences.settings.schedule.dayNightTransitionSeconds)
-                numericField("Sleep seconds", value: $preferences.settings.schedule.sleepTransitionSeconds)
+                if preferences.settings.schedule.usesSolarCurve() {
+                    LabeledContent("Day/night", value: "Solar curve")
+                } else {
+                    durationField(
+                        "Day/night",
+                        value: $preferences.settings.schedule.dayNightTransitionSeconds,
+                        range: 0...28_800
+                    )
+                }
+                durationField(
+                    "Sleep",
+                    value: $preferences.settings.schedule.sleepTransitionSeconds,
+                    range: 0...14_400
+                )
                 numericField("Pause seconds", value: $preferences.settings.schedule.pauseTransitionSeconds)
             }
         }
@@ -183,6 +195,38 @@ struct SettingsView: View {
                 .multilineTextAlignment(.trailing)
                 .frame(width: 100)
         }
+    }
+
+    private func durationField(_ title: String, value: Binding<Double>, range: ClosedRange<Double>) -> some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Stepper(value: value, in: range, step: 900) {
+                Text(durationText(value.wrappedValue))
+                    .monospacedDigit()
+                    .frame(width: 72, alignment: .trailing)
+            }
+            .frame(width: 128)
+        }
+    }
+
+    private func durationText(_ seconds: Double) -> String {
+        let minutes = Int((max(seconds, 0) / 60).rounded())
+        if minutes < 1 {
+            return "\(Int(max(seconds, 0)))s"
+        }
+
+        if minutes < 60 {
+            return "\(minutes)m"
+        }
+
+        let hours = minutes / 60
+        let remainingMinutes = minutes % 60
+        if remainingMinutes == 0 {
+            return "\(hours)h"
+        }
+
+        return "\(hours)h \(remainingMinutes)m"
     }
 
     private func coordinateField(_ title: String, value: Binding<Double>) -> some View {

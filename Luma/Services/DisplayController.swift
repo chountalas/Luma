@@ -111,9 +111,9 @@ final class DisplayController: ObservableObject {
             return
         }
 
-        let phase = currentSettings.schedule.phase(at: Date())
-        let profile = currentSettings.profile(for: phase)
-        runtime.activePhase = phase
+        let scheduledProfile = currentSettings.scheduledProfile(at: Date())
+        let profile = scheduledProfile.profile
+        runtime.activePhase = scheduledProfile.phase
 
         let effectiveProfile = animated
             ? interpolatedProfile(from: runtime.lastAppliedProfile, to: profile, progress: 0.35)
@@ -281,12 +281,7 @@ final class DisplayController: ObservableObject {
     }
 
     private func interpolatedProfile(from start: DisplayProfile, to target: DisplayProfile, progress: Double) -> DisplayProfile {
-        let progress = min(max(progress, 0), 1)
-        return DisplayProfile(
-            kelvin: start.kelvin + (target.kelvin - start.kelvin) * progress,
-            brightness: start.brightness + (target.brightness - start.brightness) * progress,
-            dimOpacity: start.dimOpacity + (target.dimOpacity - start.dimOpacity) * progress
-        )
+        DisplayProfile.interpolated(from: start, to: target, progress: progress)
     }
 
     private func clamped(_ value: Double, _ minValue: Double, _ maxValue: Double) -> Double {
