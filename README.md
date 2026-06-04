@@ -67,8 +67,8 @@ Quit other display-filter apps before using Luma as the daily driver. Running mu
 
 This produces:
 
-- `dist/Luma-0.1.7-arm64.dmg`
-- `dist/Luma-0.1.7-arm64.zip`
+- `dist/Luma-0.1.8-arm64.dmg`
+- `dist/Luma-0.1.8-arm64.zip`
 - `dist/checksums.txt`
 
 The local package is signed ad hoc by default. For a no-warning public download, set `CODE_SIGN_IDENTITY` to a Developer ID Application certificate and notarize the DMG.

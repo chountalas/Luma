@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # One-command signed + notarized release.
 # Usage:  ./script/release.sh            (builds version from project.yml default)
-#         VERSION=0.1.7 ./script/release.sh
+#         VERSION=0.1.8 ./script/release.sh
 set -euo pipefail
 
 APP_NAME="Luma"
-VERSION="${VERSION:-0.1.7}"
+VERSION="${VERSION:-0.1.8}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APP_PATH="$ROOT_DIR/DerivedData/Build/Products/Release/$APP_NAME.app"
 DMG_PATH="$ROOT_DIR/dist/$APP_NAME-$VERSION-arm64.dmg"
