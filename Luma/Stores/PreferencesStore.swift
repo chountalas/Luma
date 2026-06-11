@@ -1,5 +1,6 @@
 import Foundation
 import ServiceManagement
+import os
 
 @MainActor
 final class PreferencesStore: ObservableObject {
@@ -11,7 +12,13 @@ final class PreferencesStore: ObservableObject {
         }
     }
 
+    /// True when the user wants launch-at-login but macOS is holding the login
+    /// item in "requires approval" — surfaced in Settings so it isn't a silent failure.
+    @Published private(set) var loginItemNeedsApproval = false
+
     var onChange: ((LumaSettings) -> Void)?
+
+    private let logger = Logger(subsystem: "com.connorhountalas.Luma", category: "preferences")
 
     private let defaults: UserDefaults
     private let settingsKey = "LumaSettings.v1"
@@ -179,6 +186,14 @@ final class PreferencesStore: ObservableObject {
     }
 
     private func syncLaunchAtLogin() {
+        // Dev builds (DerivedData, dist/staging) must not touch the login item
+        // record: registering from a transient path points launchd at a copy that
+        // later disappears or goes stale, which breaks launch at startup.
+        guard Self.isRunningFromApplicationsFolder else {
+            logger.info("Skipping login item sync; bundle is outside /Applications: \(Bundle.main.bundlePath, privacy: .public)")
+            return
+        }
+
         do {
             if settings.launchAtLogin {
                 try SMAppService.mainApp.register()
@@ -186,8 +201,21 @@ final class PreferencesStore: ObservableObject {
                 try SMAppService.mainApp.unregister()
             }
         } catch {
-            // Launch-at-login can fail in unsigned development builds; keep the preference visible.
+            logger.error("Login item sync failed (status \(SMAppService.mainApp.status.rawValue)): \(error.localizedDescription, privacy: .public)")
         }
+
+        loginItemNeedsApproval = settings.launchAtLogin
+            && SMAppService.mainApp.status == .requiresApproval
+    }
+
+    func openLoginItemSettings() {
+        SMAppService.openSystemSettingsLoginItems()
+    }
+
+    private static var isRunningFromApplicationsFolder: Bool {
+        let path = Bundle.main.bundlePath
+        return path.hasPrefix("/Applications/")
+            || path.hasPrefix(NSHomeDirectory() + "/Applications/")
     }
 
     private func double(from value: Any?) -> Double? {

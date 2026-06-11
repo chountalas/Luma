@@ -11,7 +11,6 @@ struct LumaSettings: Codable, Equatable {
     var night = DisplayProfile.nightDefault
     var sleep = DisplayProfile.sleepDefault
     var schedule = ScheduleSettings()
-    var hotkeys = HotkeySettings.default
     var launchAtLogin = true
     var useOverlayFallback = true
 
@@ -23,7 +22,6 @@ struct LumaSettings: Codable, Equatable {
         night: DisplayProfile = .nightDefault,
         sleep: DisplayProfile = .sleepDefault,
         schedule: ScheduleSettings = ScheduleSettings(),
-        hotkeys: HotkeySettings = .default,
         launchAtLogin: Bool = true,
         useOverlayFallback: Bool = true
     ) {
@@ -32,7 +30,6 @@ struct LumaSettings: Codable, Equatable {
         self.night = night
         self.sleep = sleep
         self.schedule = schedule
-        self.hotkeys = hotkeys
         self.launchAtLogin = launchAtLogin
         self.useOverlayFallback = useOverlayFallback
     }
@@ -43,7 +40,6 @@ struct LumaSettings: Codable, Equatable {
         case night
         case sleep
         case schedule
-        case hotkeys
         case launchAtLogin
         case useOverlayFallback
     }
@@ -55,7 +51,6 @@ struct LumaSettings: Codable, Equatable {
         night = try container.decodeIfPresent(DisplayProfile.self, forKey: .night) ?? .nightDefault
         sleep = try container.decodeIfPresent(DisplayProfile.self, forKey: .sleep) ?? .sleepDefault
         schedule = try container.decodeIfPresent(ScheduleSettings.self, forKey: .schedule) ?? ScheduleSettings()
-        hotkeys = try container.decodeIfPresent(HotkeySettings.self, forKey: .hotkeys) ?? .default
         launchAtLogin = try container.decodeIfPresent(Bool.self, forKey: .launchAtLogin) ?? true
         useOverlayFallback = try container.decodeIfPresent(Bool.self, forKey: .useOverlayFallback) ?? true
     }

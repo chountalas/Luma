@@ -5,7 +5,6 @@ struct LumaApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var preferences = PreferencesStore()
     @StateObject private var displayController = DisplayController()
-    private let hotKeyManager = HotKeyManager()
     @State private var servicesWired = false
 
     init() {
@@ -56,28 +55,8 @@ struct LumaApp: App {
 
         preferences.onChange = { settings in
             displayController.update(settings: settings)
-            hotKeyManager.configure(enabled: settings.hotkeys.enabled)
         }
 
-        hotKeyManager.handler = { action in
-            switch action {
-            case .pause:
-                displayController.togglePaused()
-            case .warmer:
-                preferences.nudgeCurrentKelvin(by: -500)
-            case .cooler:
-                preferences.nudgeCurrentKelvin(by: 500)
-            case .brighter:
-                preferences.nudgeCurrentBrightness(by: 10)
-            case .dimmer:
-                preferences.nudgeCurrentBrightness(by: -10)
-            case .reset:
-                displayController.setPaused(true)
-                displayController.resetDisplay()
-            }
-        }
-
-        hotKeyManager.configure(enabled: preferences.settings.hotkeys.enabled)
         displayController.start(settings: preferences.settings)
     }
 

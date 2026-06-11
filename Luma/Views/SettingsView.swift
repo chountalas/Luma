@@ -88,8 +88,20 @@ struct SettingsView: View {
         Form {
             Section("Behavior") {
                 Toggle("Start at login", isOn: $preferences.settings.launchAtLogin)
+                if preferences.loginItemNeedsApproval {
+                    HStack {
+                        Label(
+                            "macOS is blocking Luma's login item. Approve it in System Settings.",
+                            systemImage: "exclamationmark.triangle.fill"
+                        )
+                        .foregroundStyle(.orange)
+                        Spacer()
+                        Button("Open Login Items") {
+                            preferences.openLoginItemSettings()
+                        }
+                    }
+                }
                 Toggle("Use overlay fallback", isOn: $preferences.settings.useOverlayFallback)
-                Toggle("Global hotkeys", isOn: $preferences.settings.hotkeys.enabled)
             }
 
             Section("Status") {

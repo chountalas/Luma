@@ -150,12 +150,6 @@ struct MenuBarView: View {
 
             Spacer()
 
-            if preferences.settings.hotkeys.enabled {
-                KeyboardPill("⌥")
-                KeyboardPill("⌘")
-                KeyboardPill("L")
-            }
-
             Toggle("", isOn: pauseBinding)
                 .labelsHidden()
                 .toggleStyle(.switch)
@@ -642,27 +636,6 @@ private struct FooterIconButton: View {
         .buttonStyle(.plain)
         .help(help)
         .background(.clear, in: RoundedRectangle(cornerRadius: 6, style: .continuous))
-    }
-}
-
-private struct KeyboardPill: View {
-    let value: String
-
-    init(_ value: String) {
-        self.value = value
-    }
-
-    var body: some View {
-        Text(value)
-            .font(.system(size: 10.5, weight: .medium))
-            .foregroundStyle(LumaPalette.secondaryText)
-            .frame(minWidth: 16, minHeight: 16)
-            .padding(.horizontal, 3)
-            .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 3, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: 3, style: .continuous)
-                    .stroke(.white.opacity(0.06), lineWidth: 0.5)
-            }
     }
 }
 

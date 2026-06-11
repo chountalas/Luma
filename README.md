@@ -16,7 +16,6 @@ Presets let you switch the overall display effect between Clear, Light, Subtle, 
 - Day, Night, and Sleep profiles that switch automatically
 - Nine built-in presets plus a Custom mode driven by manual sliders
 - Sunset/sunrise scheduling from your latitude/longitude, or a manual time window
-- Global hotkeys for quick adjustments without opening the app
 - Optional one-time importer for existing Iris visual and schedule settings
 - CoreGraphics gamma adjustment with a click-through overlay fallback for displays that reject direct gamma changes
 

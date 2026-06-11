@@ -1,17 +1,26 @@
 import AppKit
 import CoreGraphics
 import Foundation
+import os
 
 @MainActor
 final class DisplayController: ObservableObject {
     @Published private(set) var runtime = RuntimeState()
 
+    /// Gamma must fail this many times in a row before the overlay engages, so a
+    /// single rejection during display sleep/reconfiguration doesn't flash a tint.
+    private static let overlayFailureThreshold = 3
+
+    private let logger = Logger(subsystem: "com.connorhountalas.Luma", category: "display")
     private let overlayController = OverlayController()
     private var currentSettings = LumaSettings()
     private var timer: Timer?
     private var hasInstalledObservers = false
     private var transitionTask: Task<Void, Never>?
     private var recoveryTask: Task<Void, Never>?
+    private var retryTask: Task<Void, Never>?
+    private var isTransitioning = false
+    private var consecutiveGammaFailures = 0
     private var displayMaintenanceActivity: NSObjectProtocol?
 
     func start(settings: LumaSettings) {
@@ -38,9 +47,12 @@ final class DisplayController: ObservableObject {
 
     func resetDisplay() {
         transitionTask?.cancel()
+        retryTask?.cancel()
         CGDisplayRestoreColorSyncSettings()
         overlayController.clear()
         runtime.usedOverlayFallback = false
+        runtime.lastAppliedProfile = .neutral
+        consecutiveGammaFailures = 0
     }
 
     func nudgeKelvin(_ delta: Double) {
@@ -101,40 +113,126 @@ final class DisplayController: ObservableObject {
     }
 
     private func applyCurrentPhase(animated: Bool) {
-        if !animated {
-            transitionTask?.cancel()
-        }
-
         if runtime.isPaused {
+            let alreadyPaused = runtime.activePhase == .paused
             runtime.activePhase = .paused
-            resetDisplay()
+            guard !alreadyPaused else {
+                return
+            }
+
+            if animated {
+                transition(to: .neutral) { [weak self] in
+                    self?.finishPauseReset()
+                }
+            } else {
+                transitionTask?.cancel()
+                finishPauseReset()
+            }
             return
         }
 
-        let scheduledProfile = currentSettings.scheduledProfile(at: Date())
-        let profile = scheduledProfile.profile
-        runtime.activePhase = scheduledProfile.phase
+        let scheduled = currentSettings.scheduledProfile(at: Date())
+        runtime.activePhase = scheduled.phase
+        let target = scheduled.profile
 
-        let effectiveProfile = animated
-            ? interpolatedProfile(from: runtime.lastAppliedProfile, to: profile, progress: 0.35)
-            : profile
-        runtime.lastAppliedProfile = effectiveProfile
+        if !animated {
+            transitionTask?.cancel()
+            runtime.lastAppliedProfile = target
+            applyProfile(target)
+            return
+        }
 
-        let success = applyGamma(profile: effectiveProfile)
-        if success {
-            overlayController.clear()
-            runtime.usedOverlayFallback = false
+        if !isTransitioning && target.isApproximatelyEqual(to: runtime.lastAppliedProfile) {
+            // Re-assert gamma so system resets get corrected, but skip the ramp.
+            runtime.lastAppliedProfile = target
+            applyProfile(target)
+            return
+        }
+
+        transition(to: target)
+    }
+
+    private func finishPauseReset() {
+        CGDisplayRestoreColorSyncSettings()
+        overlayController.clear()
+        runtime.usedOverlayFallback = false
+        runtime.lastAppliedProfile = .neutral
+        consecutiveGammaFailures = 0
+    }
+
+    private func transition(to target: DisplayProfile, completion: (() -> Void)? = nil) {
+        transitionTask?.cancel()
+        let curve = TransitionCurve.standard
+        let start = runtime.lastAppliedProfile
+        transitionTask = Task { @MainActor [weak self] in
+            guard let self else {
+                return
+            }
+
+            self.isTransitioning = true
+            defer { self.isTransitioning = false }
+
+            for step in 1...curve.stepCount {
+                if Task.isCancelled {
+                    return
+                }
+
+                let profile = curve.profile(from: start, to: target, step: step)
+                self.runtime.lastAppliedProfile = profile
+                self.applyProfile(profile)
+
+                if step < curve.stepCount {
+                    try? await Task.sleep(for: .seconds(curve.stepInterval))
+                }
+            }
+
+            completion?()
+        }
+    }
+
+    private func applyProfile(_ profile: DisplayProfile) {
+        if applyGamma(profile: profile) {
+            consecutiveGammaFailures = 0
+            retryTask?.cancel()
+            if runtime.usedOverlayFallback {
+                overlayController.clear()
+                runtime.usedOverlayFallback = false
+                logger.info("Gamma restored; overlay fallback cleared")
+            }
             runtime.lastError = nil
-        } else if currentSettings.useOverlayFallback {
-            overlayController.apply(profile: effectiveProfile)
+            return
+        }
+
+        consecutiveGammaFailures += 1
+        logger.warning("Gamma apply failed (\(self.consecutiveGammaFailures, privacy: .public) consecutive)")
+
+        guard consecutiveGammaFailures >= Self.overlayFailureThreshold else {
+            scheduleFailureRetry()
+            return
+        }
+
+        if currentSettings.useOverlayFallback {
+            if !runtime.usedOverlayFallback {
+                logger.warning("Engaging overlay fallback")
+            }
+            overlayController.apply(profile: profile)
             runtime.usedOverlayFallback = true
             runtime.lastError = "Display rejected direct gamma changes; using overlay fallback."
         } else {
             runtime.lastError = "Display rejected direct gamma changes and overlay fallback is disabled."
         }
+    }
 
-        if animated && effectiveProfile != profile {
-            scheduleTransition(to: profile)
+    /// Retries quickly after a sub-threshold failure so a genuinely broken display
+    /// reaches the overlay fallback in ~1s instead of waiting out 15s timer ticks.
+    private func scheduleFailureRetry() {
+        retryTask?.cancel()
+        retryTask = Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .milliseconds(500))
+            guard let self, !Task.isCancelled, !self.isTransitioning else {
+                return
+            }
+            self.applyCurrentPhase(animated: false)
         }
     }
 
@@ -155,8 +253,15 @@ final class DisplayController: ObservableObject {
         let tables = ColorTemperature.gammaTables(profile: profile)
         runtime.displayCount = Int(displayCount)
 
-        var allSucceeded = true
+        var attempted = 0
+        var failed = 0
         for display in displays {
+            // A sleeping display rejects gamma writes; that is not a real failure.
+            guard CGDisplayIsAsleep(display) == 0 else {
+                continue
+            }
+            attempted += 1
+
             let setResult = tables.red.withUnsafeBufferPointer { redBuffer in
                 tables.green.withUnsafeBufferPointer { greenBuffer in
                     tables.blue.withUnsafeBufferPointer { blueBuffer in
@@ -172,11 +277,11 @@ final class DisplayController: ObservableObject {
             }
 
             if setResult != .success {
-                allSucceeded = false
+                failed += 1
             }
         }
 
-        return allSucceeded
+        return failed == 0
     }
 
     private func installDisplayObservers() {
@@ -184,6 +289,13 @@ final class DisplayController: ObservableObject {
             return
         }
         hasInstalledObservers = true
+
+        CGDisplayRegisterReconfigurationCallback({ _, flags, _ in
+            guard !flags.contains(.beginConfigurationFlag) else {
+                return
+            }
+            NotificationCenter.default.post(name: .lumaDisplayReconfigured, object: nil)
+        }, nil)
 
         let workspaceNotificationCenter = NSWorkspace.shared.notificationCenter
         let workspaceNotifications: [Notification.Name] = [
@@ -199,14 +311,14 @@ final class DisplayController: ObservableObject {
                 queue: .main
             ) { [weak self] _ in
                 Task { @MainActor in
-                    self?.scheduleRecoveryReapply()
+                    self?.scheduleRecoveryReapply(reason: notificationName.rawValue)
                 }
             }
         }
 
         let appNotifications: [Notification.Name] = [
-            NSApplication.didBecomeActiveNotification,
-            NSApplication.didChangeScreenParametersNotification
+            NSApplication.didChangeScreenParametersNotification,
+            .lumaDisplayReconfigured
         ]
 
         for notificationName in appNotifications {
@@ -216,13 +328,24 @@ final class DisplayController: ObservableObject {
                 queue: .main
             ) { [weak self] _ in
                 Task { @MainActor in
-                    self?.scheduleRecoveryReapply()
+                    self?.scheduleRecoveryReapply(reason: notificationName.rawValue)
                 }
+            }
+        }
+
+        DistributedNotificationCenter.default().addObserver(
+            forName: Notification.Name("com.apple.screenIsUnlocked"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.scheduleRecoveryReapply(reason: "screenIsUnlocked")
             }
         }
     }
 
-    private func scheduleRecoveryReapply() {
+    private func scheduleRecoveryReapply(reason: String) {
+        logger.info("Recovery reapply scheduled: \(reason, privacy: .public)")
         recoveryTask?.cancel()
         recoveryTask = Task { @MainActor [weak self] in
             let delays: [Duration] = [
@@ -242,49 +365,26 @@ final class DisplayController: ObservableObject {
                     try? await Task.sleep(for: delay)
                 }
 
-                if Task.isCancelled {
+                guard let self, !Task.isCancelled else {
                     return
                 }
 
-                self?.applyCurrentPhase(animated: false)
-            }
-        }
-    }
-
-    private func scheduleTransition(to target: DisplayProfile) {
-        transitionTask?.cancel()
-        let start = runtime.lastAppliedProfile
-        transitionTask = Task { @MainActor [weak self] in
-            guard let self else {
-                return
-            }
-
-            for step in 1...12 {
-                if Task.isCancelled {
-                    return
+                // An in-flight ramp is already writing gamma every step;
+                // snapping here would visibly interrupt it.
+                if self.isTransitioning {
+                    continue
                 }
 
-                let progress = Double(step) / 12
-                let profile = self.interpolatedProfile(from: start, to: target, progress: progress)
-                self.runtime.lastAppliedProfile = profile
-                if self.applyGamma(profile: profile) {
-                    self.overlayController.clear()
-                    self.runtime.usedOverlayFallback = false
-                } else if self.currentSettings.useOverlayFallback {
-                    self.overlayController.apply(profile: profile)
-                    self.runtime.usedOverlayFallback = true
-                }
-
-                try? await Task.sleep(for: .milliseconds(120))
+                self.applyCurrentPhase(animated: false)
             }
         }
-    }
-
-    private func interpolatedProfile(from start: DisplayProfile, to target: DisplayProfile, progress: Double) -> DisplayProfile {
-        DisplayProfile.interpolated(from: start, to: target, progress: progress)
     }
 
     private func clamped(_ value: Double, _ minValue: Double, _ maxValue: Double) -> Double {
         min(max(value, minValue), maxValue)
     }
+}
+
+extension Notification.Name {
+    static let lumaDisplayReconfigured = Notification.Name("LumaDisplayReconfigured")
 }

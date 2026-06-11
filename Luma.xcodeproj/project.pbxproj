@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01F3D3E49390F786CEFC88C3 /* TransitionCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D32A9F0AA7AD0C78BBAEC5 /* TransitionCurve.swift */; };
 		2E17368994AA57167BE71D28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE47B2CD78600E8891E874C3 /* Assets.xcassets */; };
 		32CC73949C5A199CC5C85839 /* LumaSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9658C81B528C2351FEAD47 /* LumaSettings.swift */; };
-		441FA182165BA8708366BEBB /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A9263AB25024CC3C4BD89C /* HotKeyManager.swift */; };
 		44D1E37F13363C4680990458 /* RuntimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F839E16478C7F0B43BB928 /* RuntimeState.swift */; };
-		49972B8E0ADD764EBC14D58A /* HotkeySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655E52D3D3C1E77B1CF5A0B9 /* HotkeySettings.swift */; };
 		49D311F7E64B25957BD2D2C5 /* SunCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBB6430826D90F900EC87C /* SunCalculator.swift */; };
 		4AFAE1D42AE8039D221308B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31CA152F60B444CE0629449 /* AppDelegate.swift */; };
 		4F68376CDEAFA622629BCC6B /* DisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4518A779047271DDA1B72DEA /* DisplayController.swift */; };
@@ -27,6 +26,7 @@
 		D5469B2F64F4B17C5ED965C6 /* SunCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A5B814FC5D99A966652685 /* SunCalculatorTests.swift */; };
 		D74E81A6B5D8158C0723D221 /* DisplayProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F48E667718E73B1D8602F /* DisplayProfile.swift */; };
 		D8B5CBA2CCB467CBB66DC3C2 /* ColorTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D40142EEEC9755BCEF7E13 /* ColorTemperature.swift */; };
+		E0A17B3EABD3927580A3161E /* TransitionCurveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7582FABF4E4DA1681C82EA /* TransitionCurveTests.swift */; };
 		F6454A349CC94685BF6A6DE5 /* PreferencesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13652FC913B1FACEEAB8446 /* PreferencesStoreTests.swift */; };
 		FFD76A09DEFE3E5CB5BDE8CD /* LumaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8622749F5D1B6614FE2B1EC3 /* LumaApp.swift */; };
 /* End PBXBuildFile section */
@@ -48,17 +48,17 @@
 		4518A779047271DDA1B72DEA /* DisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayController.swift; sourceTree = "<group>"; };
 		512A0E919CE3090201E82317 /* OverlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayController.swift; sourceTree = "<group>"; };
 		6317FAA29F22A3EA8450208F /* LumaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LumaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		655E52D3D3C1E77B1CF5A0B9 /* HotkeySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySettings.swift; sourceTree = "<group>"; };
 		69FBB6430826D90F900EC87C /* SunCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunCalculator.swift; sourceTree = "<group>"; };
 		6C9658C81B528C2351FEAD47 /* LumaSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumaSettings.swift; sourceTree = "<group>"; };
 		705D19274AD9924C344393AF /* ScheduleSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSettings.swift; sourceTree = "<group>"; };
+		7A7582FABF4E4DA1681C82EA /* TransitionCurveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionCurveTests.swift; sourceTree = "<group>"; };
 		8173B8A494DF3FFAAC687170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8622749F5D1B6614FE2B1EC3 /* LumaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumaApp.swift; sourceTree = "<group>"; };
 		93A5B814FC5D99A966652685 /* SunCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunCalculatorTests.swift; sourceTree = "<group>"; };
 		B928C23520C66A814B3D7C24 /* ScheduleSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSettingsTests.swift; sourceTree = "<group>"; };
 		C0C5A65312921C562F9563CE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C3D32A9F0AA7AD0C78BBAEC5 /* TransitionCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionCurve.swift; sourceTree = "<group>"; };
 		CE47B2CD78600E8891E874C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D5A9263AB25024CC3C4BD89C /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyManager.swift; sourceTree = "<group>"; };
 		DE66FA1CACC3A8BA41DE59B6 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		DF8C531E464C9C4EDE2648C6 /* Luma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Luma.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F839E16478C7F0B43BB928 /* RuntimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeState.swift; sourceTree = "<group>"; };
@@ -107,7 +107,6 @@
 			isa = PBXGroup;
 			children = (
 				205F48E667718E73B1D8602F /* DisplayProfile.swift */,
-				655E52D3D3C1E77B1CF5A0B9 /* HotkeySettings.swift */,
 				FFD98F3E840A7E74443CCE36 /* LumaPreset.swift */,
 				6C9658C81B528C2351FEAD47 /* LumaSettings.swift */,
 				E1F839E16478C7F0B43BB928 /* RuntimeState.swift */,
@@ -138,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				4518A779047271DDA1B72DEA /* DisplayController.swift */,
-				D5A9263AB25024CC3C4BD89C /* HotKeyManager.swift */,
 				512A0E919CE3090201E82317 /* OverlayController.swift */,
 			);
 			path = Services;
@@ -153,6 +151,7 @@
 				F13652FC913B1FACEEAB8446 /* PreferencesStoreTests.swift */,
 				B928C23520C66A814B3D7C24 /* ScheduleSettingsTests.swift */,
 				93A5B814FC5D99A966652685 /* SunCalculatorTests.swift */,
+				7A7582FABF4E4DA1681C82EA /* TransitionCurveTests.swift */,
 			);
 			path = LumaTests;
 			sourceTree = "<group>";
@@ -162,6 +161,7 @@
 			children = (
 				F2D40142EEEC9755BCEF7E13 /* ColorTemperature.swift */,
 				69FBB6430826D90F900EC87C /* SunCalculator.swift */,
+				C3D32A9F0AA7AD0C78BBAEC5 /* TransitionCurve.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -268,8 +268,6 @@
 				D8B5CBA2CCB467CBB66DC3C2 /* ColorTemperature.swift in Sources */,
 				4F68376CDEAFA622629BCC6B /* DisplayController.swift in Sources */,
 				D74E81A6B5D8158C0723D221 /* DisplayProfile.swift in Sources */,
-				441FA182165BA8708366BEBB /* HotKeyManager.swift in Sources */,
-				49972B8E0ADD764EBC14D58A /* HotkeySettings.swift in Sources */,
 				FFD76A09DEFE3E5CB5BDE8CD /* LumaApp.swift in Sources */,
 				762A875D3A3C06F6A6B7B0AB /* LumaPreset.swift in Sources */,
 				32CC73949C5A199CC5C85839 /* LumaSettings.swift in Sources */,
@@ -280,6 +278,7 @@
 				6A8BF184AF082D3C64FD3B5C /* ScheduleSettings.swift in Sources */,
 				AA275BE380B7558509E462D6 /* SettingsView.swift in Sources */,
 				49D311F7E64B25957BD2D2C5 /* SunCalculator.swift in Sources */,
+				01F3D3E49390F786CEFC88C3 /* TransitionCurve.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +291,7 @@
 				F6454A349CC94685BF6A6DE5 /* PreferencesStoreTests.swift in Sources */,
 				64370C9ADC68CD983BCB7471 /* ScheduleSettingsTests.swift in Sources */,
 				D5469B2F64F4B17C5ED965C6 /* SunCalculatorTests.swift in Sources */,
+				E0A17B3EABD3927580A3161E /* TransitionCurveTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,7 +319,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.8;
+				MARKETING_VERSION = 0.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.connorhountalas.Luma;
 				SDKROOT = macosx;
 			};
@@ -491,7 +491,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.8;
+				MARKETING_VERSION = 0.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.connorhountalas.Luma;
 				SDKROOT = macosx;
 			};
