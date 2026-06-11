@@ -5,6 +5,8 @@ struct DisplayProfile: Codable, Equatable {
     var brightness: Double
     var dimOpacity: Double
 
+    /// Approximates an untouched display; used as the visual endpoint when pausing.
+    static let neutral = DisplayProfile(kelvin: 6500, brightness: 100, dimOpacity: 0)
     static let dayDefault = DisplayProfile(kelvin: 4300, brightness: 100, dimOpacity: 0)
     static let nightDefault = DisplayProfile(kelvin: 3700, brightness: 96, dimOpacity: 3)
     static let sleepDefault = DisplayProfile(kelvin: 3100, brightness: 90, dimOpacity: 10)
