@@ -107,7 +107,6 @@ final class PreferencesStore: ObservableObject {
         imported.schedule.sleepEnabled = bool(from: plist["UseSleepLight"]) ?? imported.schedule.sleepEnabled
         imported.schedule.dayNightTransitionSeconds = double(from: plist["NightTransitionDuration"]) ?? imported.schedule.dayNightTransitionSeconds
         imported.schedule.sleepTransitionSeconds = double(from: plist["SleepTransitionDuration"]) ?? imported.schedule.sleepTransitionSeconds
-        imported.schedule.pauseTransitionSeconds = (double(from: plist["PauseTransitionDuration"]) ?? 1000) / 1000
 
         settings = imported
         settings.selectedPreset = .custom

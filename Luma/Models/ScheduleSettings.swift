@@ -57,7 +57,6 @@ struct PhaseTransition: Equatable {
 struct ScheduleSettings: Codable, Equatable {
     static let defaultDayNightTransitionSeconds: Double = 14_400
     static let defaultSleepTransitionSeconds: Double = 7_200
-    static let defaultPauseTransitionSeconds: Double = 1
     static let fullNightSolarElevationDegrees: Double = -8
     static let fullDaySolarElevationDegrees: Double = 35
 
@@ -73,7 +72,6 @@ struct ScheduleSettings: Codable, Equatable {
     var wakeTime = TimeOfDay(hour: 4, minute: 0)
     var dayNightTransitionSeconds: Double = Self.defaultDayNightTransitionSeconds
     var sleepTransitionSeconds: Double = Self.defaultSleepTransitionSeconds
-    var pauseTransitionSeconds: Double = Self.defaultPauseTransitionSeconds
 
     var hasValidSunCoordinates: Bool {
         latitude.isFinite

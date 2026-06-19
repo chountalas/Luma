@@ -78,7 +78,6 @@ struct SettingsView: View {
                     value: $preferences.settings.schedule.sleepTransitionSeconds,
                     range: 0...14_400
                 )
-                numericField("Pause seconds", value: $preferences.settings.schedule.pauseTransitionSeconds)
             }
         }
         .formStyle(.grouped)
@@ -186,16 +185,6 @@ struct SettingsView: View {
                 }
             }
             .frame(width: 80)
-        }
-    }
-
-    private func numericField(_ title: String, value: Binding<Double>) -> some View {
-        HStack {
-            Text(title)
-            Spacer()
-            TextField(title, value: value, format: .number)
-                .multilineTextAlignment(.trailing)
-                .frame(width: 100)
         }
     }
 
