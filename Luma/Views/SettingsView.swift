@@ -158,20 +158,10 @@ struct SettingsView: View {
 
     private func profileSection(_ title: String, profile: Binding<DisplayProfile>) -> some View {
         Section(title) {
-            SliderRow(title: "Temperature", value: profileValue(profile, \.kelvin), range: 1000...10000, step: 100, suffix: "K")
-            SliderRow(title: "Brightness", value: profileValue(profile, \.brightness), range: 5...150, step: 1, suffix: "%")
-            SliderRow(title: "Dim opacity", value: profileValue(profile, \.dimOpacity), range: 0...85, step: 1, suffix: "%")
+            SliderRow(title: "Temperature", value: profileComponentBinding(profile, \.kelvin, markingCustom: preferences), range: DisplayProfile.kelvinRange, step: 100, suffix: "K")
+            SliderRow(title: "Brightness", value: profileComponentBinding(profile, \.brightness, markingCustom: preferences), range: DisplayProfile.brightnessRange, step: 1, suffix: "%")
+            SliderRow(title: "Dim opacity", value: profileComponentBinding(profile, \.dimOpacity, markingCustom: preferences), range: DisplayProfile.dimOpacityRange, step: 1, suffix: "%")
         }
-    }
-
-    private func profileValue(_ profile: Binding<DisplayProfile>, _ keyPath: WritableKeyPath<DisplayProfile, Double>) -> Binding<Double> {
-        Binding(
-            get: { profile.wrappedValue[keyPath: keyPath] },
-            set: {
-                profile.wrappedValue[keyPath: keyPath] = $0
-                preferences.markCustomPreset()
-            }
-        )
     }
 
     private func timePicker(_ title: String, time: Binding<TimeOfDay>) -> some View {

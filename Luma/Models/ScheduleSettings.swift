@@ -64,6 +64,8 @@ struct ScheduleSettings: Codable, Equatable {
     var mode: ScheduleMode = .manual
     var nightStart = TimeOfDay(hour: 20, minute: 0)
     var nightEnd = TimeOfDay(hour: 6, minute: 0)
+    // 200 is an out-of-range sentinel (valid latitude is -90...90) that keeps the
+    // sun schedule on its manual fallback until the user enters real coordinates.
     var latitude: Double = 200
     var longitude: Double = 0
     var sleepEnabled = true

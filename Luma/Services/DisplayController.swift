@@ -41,10 +41,6 @@ final class DisplayController: ObservableObject {
         applyCurrentPhase(animated: true)
     }
 
-    func togglePaused() {
-        setPaused(!runtime.isPaused)
-    }
-
     func resetDisplay() {
         transitionTask?.cancel()
         retryTask?.cancel()
@@ -53,40 +49,6 @@ final class DisplayController: ObservableObject {
         runtime.usedOverlayFallback = false
         runtime.lastAppliedProfile = .neutral
         consecutiveGammaFailures = 0
-    }
-
-    func nudgeKelvin(_ delta: Double) {
-        var settings = currentSettings
-        let phase = currentSettings.schedule.phase(at: Date())
-        switch phase {
-        case .day:
-            settings.day.kelvin = clamped(settings.day.kelvin + delta, 1000, 10000)
-        case .night:
-            settings.night.kelvin = clamped(settings.night.kelvin + delta, 1000, 10000)
-        case .sleep:
-            settings.sleep.kelvin = clamped(settings.sleep.kelvin + delta, 1000, 10000)
-        case .paused:
-            break
-        }
-        currentSettings = settings
-        applyCurrentPhase(animated: true)
-    }
-
-    func nudgeBrightness(_ delta: Double) {
-        var settings = currentSettings
-        let phase = currentSettings.schedule.phase(at: Date())
-        switch phase {
-        case .day:
-            settings.day.brightness = clamped(settings.day.brightness + delta, 5, 150)
-        case .night:
-            settings.night.brightness = clamped(settings.night.brightness + delta, 5, 150)
-        case .sleep:
-            settings.sleep.brightness = clamped(settings.sleep.brightness + delta, 5, 150)
-        case .paused:
-            break
-        }
-        currentSettings = settings
-        applyCurrentPhase(animated: true)
     }
 
     private func scheduleTick() {
@@ -378,10 +340,6 @@ final class DisplayController: ObservableObject {
                 self.applyCurrentPhase(animated: false)
             }
         }
-    }
-
-    private func clamped(_ value: Double, _ minValue: Double, _ maxValue: Double) -> Double {
-        min(max(value, minValue), maxValue)
     }
 }
 

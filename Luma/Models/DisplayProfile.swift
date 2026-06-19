@@ -11,6 +11,11 @@ struct DisplayProfile: Codable, Equatable {
     static let nightDefault = DisplayProfile(kelvin: 3700, brightness: 96, dimOpacity: 3)
     static let sleepDefault = DisplayProfile(kelvin: 3100, brightness: 90, dimOpacity: 10)
 
+    /// User-adjustable bounds for each component, shared by every profile slider.
+    static let kelvinRange: ClosedRange<Double> = 1000...10000
+    static let brightnessRange: ClosedRange<Double> = 5...150
+    static let dimOpacityRange: ClosedRange<Double> = 0...85
+
     var normalizedBrightness: Double {
         min(max(brightness / 100, 0.05), 1.5)
     }
@@ -27,4 +32,9 @@ struct DisplayProfile: Codable, Equatable {
             dimOpacity: start.dimOpacity + (target.dimOpacity - start.dimOpacity) * progress
         )
     }
+}
+
+extension DisplayProfile {
+    var kelvinText: String { "\(Int(kelvin))K" }
+    var brightnessText: String { "\(Int(brightness))%" }
 }

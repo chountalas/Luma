@@ -204,24 +204,24 @@ struct MenuBarView: View {
 
             ProfileSliderRow(
                 title: "Warmth",
-                value: profileValue(profileBinding(for: selectedPhase), \.kelvin),
-                range: 1000...10000,
+                value: profileComponentBinding(profileBinding(for: selectedPhase), \.kelvin, markingCustom: preferences),
+                range: DisplayProfile.kelvinRange,
                 step: 100,
                 format: { "\(Int($0))K" }
             )
 
             ProfileSliderRow(
                 title: "Brightness",
-                value: profileValue(profileBinding(for: selectedPhase), \.brightness),
-                range: 5...150,
+                value: profileComponentBinding(profileBinding(for: selectedPhase), \.brightness, markingCustom: preferences),
+                range: DisplayProfile.brightnessRange,
                 step: 1,
                 format: { "\(Int($0))%" }
             )
 
             ProfileSliderRow(
                 title: "Dim",
-                value: profileValue(profileBinding(for: selectedPhase), \.dimOpacity),
-                range: 0...85,
+                value: profileComponentBinding(profileBinding(for: selectedPhase), \.dimOpacity, markingCustom: preferences),
+                range: DisplayProfile.dimOpacityRange,
                 step: 1,
                 format: { "\(Int($0))%" }
             )
@@ -287,19 +287,6 @@ struct MenuBarView: View {
                 case .paused:
                     preferences.settings.day = profile
                 }
-            }
-        )
-    }
-
-    private func profileValue(
-        _ profile: Binding<DisplayProfile>,
-        _ keyPath: WritableKeyPath<DisplayProfile, Double>
-    ) -> Binding<Double> {
-        Binding(
-            get: { profile.wrappedValue[keyPath: keyPath] },
-            set: {
-                profile.wrappedValue[keyPath: keyPath] = $0
-                preferences.markCustomPreset()
             }
         )
     }
@@ -709,16 +696,6 @@ private extension ActivePhase {
     }
 }
 
-private extension DisplayProfile {
-    var kelvinText: String {
-        "\(Int(kelvin))K"
-    }
-
-    var brightnessText: String {
-        "\(Int(brightness))%"
-    }
-}
-
 private extension Date {
     var shortTimeString: String {
         let formatter = DateFormatter()
@@ -726,4 +703,22 @@ private extension Date {
         formatter.timeStyle = .short
         return formatter.string(from: self)
     }
+}
+
+/// Bridges one numeric component of a profile to a `Double` slider binding,
+/// switching the active preset to Custom whenever the user drags it. Shared by
+/// the menu bar and Settings profile sliders.
+@MainActor
+func profileComponentBinding(
+    _ profile: Binding<DisplayProfile>,
+    _ keyPath: WritableKeyPath<DisplayProfile, Double>,
+    markingCustom store: PreferencesStore
+) -> Binding<Double> {
+    Binding(
+        get: { profile.wrappedValue[keyPath: keyPath] },
+        set: {
+            profile.wrappedValue[keyPath: keyPath] = $0
+            store.markCustomPreset()
+        }
+    )
 }

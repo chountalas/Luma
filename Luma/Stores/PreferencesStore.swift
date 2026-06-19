@@ -69,40 +69,6 @@ final class PreferencesStore: ObservableObject {
         }
     }
 
-    func nudgeCurrentKelvin(by delta: Double) {
-        var updated = settings
-        let phase = settings.schedule.phase(at: Date())
-        switch phase {
-        case .day:
-            updated.day.kelvin = clamped(updated.day.kelvin + delta, 1000, 10000)
-        case .night:
-            updated.night.kelvin = clamped(updated.night.kelvin + delta, 1000, 10000)
-        case .sleep:
-            updated.sleep.kelvin = clamped(updated.sleep.kelvin + delta, 1000, 10000)
-        case .paused:
-            return
-        }
-        updated.selectedPreset = .custom
-        settings = updated
-    }
-
-    func nudgeCurrentBrightness(by delta: Double) {
-        var updated = settings
-        let phase = settings.schedule.phase(at: Date())
-        switch phase {
-        case .day:
-            updated.day.brightness = clamped(updated.day.brightness + delta, 5, 150)
-        case .night:
-            updated.night.brightness = clamped(updated.night.brightness + delta, 5, 150)
-        case .sleep:
-            updated.sleep.brightness = clamped(updated.sleep.brightness + delta, 5, 150)
-        case .paused:
-            return
-        }
-        updated.selectedPreset = .custom
-        settings = updated
-    }
-
     func importSafeIrisPreferences() -> Bool {
         let url = FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent("Library/Preferences/com.iristech.Iris.plist")
@@ -149,8 +115,11 @@ final class PreferencesStore: ObservableObject {
     }
 
     private func save() {
-        if let data = try? JSONEncoder().encode(settings) {
+        do {
+            let data = try JSONEncoder().encode(settings)
             defaults.set(data, forKey: settingsKey)
+        } catch {
+            logger.error("Failed to persist settings: \(error.localizedDescription, privacy: .public)")
         }
     }
 
@@ -160,10 +129,10 @@ final class PreferencesStore: ObservableObject {
             return LoadedSettings(settings: LumaSettings(), hasStoredSelectedPreset: false)
         }
 
-        let storedObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        let probe = try? JSONDecoder().decode(SelectedPresetProbe.self, from: data)
         return LoadedSettings(
             settings: decoded,
-            hasStoredSelectedPreset: storedObject?["selectedPreset"] != nil
+            hasStoredSelectedPreset: probe?.hasSelectedPreset ?? false
         )
     }
 
@@ -243,13 +212,24 @@ final class PreferencesStore: ObservableObject {
             return nil
         }
     }
-
-    private func clamped(_ value: Double, _ minValue: Double, _ maxValue: Double) -> Double {
-        min(max(value, minValue), maxValue)
-    }
 }
 
 private struct LoadedSettings {
     var settings: LumaSettings
     var hasStoredSelectedPreset: Bool
+}
+
+/// Detects whether stored settings JSON carried a `selectedPreset` key, which
+/// separates pre-preset installs from current ones during first-run migration.
+private struct SelectedPresetProbe: Decodable {
+    let hasSelectedPreset: Bool
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        hasSelectedPreset = container.contains(.selectedPreset)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case selectedPreset
+    }
 }
