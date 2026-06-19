@@ -5,7 +5,7 @@
 set -euo pipefail
 
 APP_NAME="Luma"
-VERSION="${VERSION:-0.1.9}"
+VERSION="${VERSION:-0.1.10}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APP_PATH="$ROOT_DIR/DerivedData/Build/Products/Release/$APP_NAME.app"
 DMG_PATH="$ROOT_DIR/dist/$APP_NAME-$VERSION-arm64.dmg"
