@@ -57,13 +57,14 @@ struct PhaseTransition: Equatable {
 struct ScheduleSettings: Codable, Equatable {
     static let defaultDayNightTransitionSeconds: Double = 14_400
     static let defaultSleepTransitionSeconds: Double = 7_200
-    static let defaultPauseTransitionSeconds: Double = 1
     static let fullNightSolarElevationDegrees: Double = -8
     static let fullDaySolarElevationDegrees: Double = 35
 
     var mode: ScheduleMode = .manual
     var nightStart = TimeOfDay(hour: 20, minute: 0)
     var nightEnd = TimeOfDay(hour: 6, minute: 0)
+    // 200 is an out-of-range sentinel (valid latitude is -90...90) that keeps the
+    // sun schedule on its manual fallback until the user enters real coordinates.
     var latitude: Double = 200
     var longitude: Double = 0
     var sleepEnabled = true
@@ -71,7 +72,6 @@ struct ScheduleSettings: Codable, Equatable {
     var wakeTime = TimeOfDay(hour: 4, minute: 0)
     var dayNightTransitionSeconds: Double = Self.defaultDayNightTransitionSeconds
     var sleepTransitionSeconds: Double = Self.defaultSleepTransitionSeconds
-    var pauseTransitionSeconds: Double = Self.defaultPauseTransitionSeconds
 
     var hasValidSunCoordinates: Bool {
         latitude.isFinite

@@ -41,6 +41,8 @@ enum SunCalculator {
         )
     }
 
+    /// Solar elevation in degrees above the horizon, via the NOAA solar-position
+    /// equations. Drives the smooth daytime-to-night blend through twilight.
     static func solarElevation(on date: Date, latitude: Double, longitude: Double, calendar: Calendar = .current) -> Double? {
         guard latitude.isFinite,
               longitude.isFinite,
@@ -90,6 +92,9 @@ enum SunCalculator {
         return 90 - radiansToDegrees(zenith)
     }
 
+    /// Sunrise/sunset via the standard US Naval Observatory almanac algorithm.
+    /// Zenith 90.833 degrees folds in atmospheric refraction and the sun's disc
+    /// radius; returns nil during polar day/night when the sun never crosses it.
     private static func eventHours(dayOfYear: Int, latitude: Double, longitudeHour: Double, isSunrise: Bool) -> Double? {
         let zenith = 90.833
         let t = Double(dayOfYear) + ((isSunrise ? 6 : 18) - longitudeHour) / 24
